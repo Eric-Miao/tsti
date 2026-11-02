@@ -113,7 +113,6 @@ export default function App() {
       onStart={() => navigate({ name: 'quiz' })}
       lastResult={loadLastResult()}
       onViewLast={(code) => navigate({ name: 'result', code })}
-      onPickType={(code) => navigate({ name: 'result', code })}
     />
   )
 }

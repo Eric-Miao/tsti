@@ -1,19 +1,17 @@
 import { useEffect, useState } from 'react'
 import { Ball } from '../components/Ball'
 import { DimensionLegend } from '../components/DimBars'
-import { ALL_CODES, TYPES } from '../data/types'
+import { TYPES } from '../data/types'
 import { fetchStats, type Stats } from '../lib/supabase'
 
 export function Landing({
   onStart,
   lastResult,
   onViewLast,
-  onPickType,
 }: {
   onStart: () => void
   lastResult: string | null
   onViewLast: (code: string) => void
-  onPickType: (code: string) => void
 }) {
   const [stats, setStats] = useState<Stats | null>(null)
 
@@ -24,10 +22,6 @@ export function Landing({
       alive = false
     }
   }, [])
-
-  const top = stats && stats.total > 0
-    ? Object.entries(stats.counts).sort((a, b) => b[1] - a[1])[0]
-    : null
 
   return (
     <div className="mx-auto min-h-dvh w-full max-w-[600px] px-5 pb-14">
@@ -94,50 +88,12 @@ export function Landing({
         </p>
       </section>
 
-      <section className="mt-10">
-        <div className="flex items-baseline justify-between border-b-[1.5px] border-ink pb-2">
-          <h2 className="font-cond text-lg font-bold tracking-[0.18em] uppercase">十六种型号</h2>
-          <span className="label text-[0.58rem]">16 Types</span>
-        </div>
-
-        <div className="mt-4 grid grid-cols-2 gap-px bg-ink/15">
-          {ALL_CODES.map((code) => {
-            const t = TYPES[code]
-            return (
-              <button
-                key={code}
-                onClick={() => onPickType(code)}
-                className="group bg-paper px-3 py-3 text-left transition-colors hover:bg-paper-2"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="font-display text-[1.05rem] tracking-[0.04em] text-green group-hover:text-clay">
-                    {code}
-                  </span>
-                  <span className="text-[0.6rem] text-ink/25">→</span>
-                </div>
-                <div className="mt-0.5 text-[0.82rem] font-medium">{t.name}</div>
-              </button>
-            )
-          })}
-        </div>
-
-        {top && (
-          <p className="mt-3 text-[0.72rem] text-ink-soft">
-            目前最多人测出的是
-            <span className="mx-1 font-semibold text-ink">
-              {top[0]} {TYPES[top[0]]?.name}
-            </span>
-            ，占 {Math.round((top[1] / stats!.total) * 100)}%。
-          </p>
-        )}
-      </section>
-
       <section className="mt-10 border-[1.5px] border-ink bg-green p-5 text-paper">
-        <div className="label text-[0.58rem] text-paper/60">Why 16</div>
+        <div className="label text-[0.58rem] text-paper/60">为什么是 16 种</div>
         <p className="mt-2 text-[0.9rem] leading-[1.8]">
-          网球最容易被简化成“进攻型”和“防守型”两种。
-          但真正决定你像谁的，还有你站在哪、球怎么飞，以及你在场上藏不藏得住情绪。
-          四个维度拆开，才有 16 种可以认领的答案。
+          大部分网球测试只问一件事：你进攻还是防守。
+          可决定你像谁的，还有你站在底线还是网前、球过网是高还是低、丢分之后脸上写不写字。
+          这四件事各自只有两个答案，加起来十六种。少一个维度，你就会掉进一个不像自己的格子。
         </p>
       </section>
 

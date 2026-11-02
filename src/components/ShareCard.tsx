@@ -7,11 +7,8 @@ import { SITE } from '../config'
 
 export const ShareCard = forwardRef<
   HTMLDivElement,
-  { type: TennisType; dims?: DimensionResult[]; site?: string; handle?: string }
->(function ShareCard(
-  { type, dims, site = SITE.url, handle = SITE.handle },
-  ref,
-) {
+  { type: TennisType; dims?: DimensionResult[]; handle?: string }
+>(function ShareCard({ type, dims, handle = SITE.handle }, ref) {
   const fontSans =
     '"Inter","PingFang SC","Hiragino Sans GB","Noto Sans SC",system-ui,sans-serif'
   const fontDisplay = '"Archivo Black","PingFang SC",sans-serif'
@@ -89,7 +86,7 @@ export const ShareCard = forwardRef<
       </div>
 
       {/* main */}
-      <div style={{ display: 'flex', gap: 40, marginTop: 30, position: 'relative', flexShrink: 0 }}>
+      <div style={{ display: 'flex', gap: 40, marginTop: 28, position: 'relative', flexShrink: 0 }}>
         <div
           style={{
             width: 592,
@@ -112,7 +109,7 @@ export const ShareCard = forwardRef<
           <div
             style={{
               fontFamily: fontDisplay,
-              fontSize: 116,
+              fontSize: 112,
               lineHeight: 0.9,
               letterSpacing: '0.01em',
               color: '#1F4D3A',
@@ -121,7 +118,7 @@ export const ShareCard = forwardRef<
           >
             {type.code}
           </div>
-          <div style={{ fontSize: 44, fontWeight: 700, lineHeight: 1.15, marginTop: 12 }}>
+          <div style={{ fontSize: 42, fontWeight: 700, lineHeight: 1.15, marginTop: 12 }}>
             {type.name}
           </div>
           <div
@@ -129,15 +126,15 @@ export const ShareCard = forwardRef<
               width: 40,
               height: 4,
               background: '#D9622B',
-              marginTop: 16,
-              marginBottom: 14,
+              marginTop: 14,
+              marginBottom: 12,
             }}
           />
-          <div style={{ fontSize: 21, color: '#3D4A41', lineHeight: 1.55 }}>{type.tagline}</div>
+          <div style={{ fontSize: 20, color: '#3D4A41', lineHeight: 1.55 }}>{type.tagline}</div>
 
           {/* dims */}
           {dims && (
-            <div style={{ marginTop: 26, display: 'flex', flexDirection: 'column', gap: 17 }}>
+            <div style={{ marginTop: 22, display: 'flex', flexDirection: 'column', gap: 15 }}>
               {dims.map((d) => {
                 const meta = DIMENSIONS[d.dim]
                 const leftPct = Math.round((d.leftCount / (d.leftCount + d.rightCount || 1)) * 100)
@@ -147,10 +144,10 @@ export const ShareCard = forwardRef<
                       style={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        fontSize: 17,
+                        fontSize: 16,
                         fontFamily: fontCond,
                         letterSpacing: '0.04em',
-                        marginBottom: 5,
+                        marginBottom: 4,
                       }}
                     >
                       <span
@@ -170,7 +167,7 @@ export const ShareCard = forwardRef<
                         {meta.rightLabel} {d.right}
                       </span>
                     </div>
-                    <div style={{ height: 8, background: '#E3D6BD', position: 'relative' }}>
+                    <div style={{ height: 7, background: '#E3D6BD', position: 'relative' }}>
                       <div
                         style={{
                           position: 'absolute',
@@ -196,19 +193,45 @@ export const ShareCard = forwardRef<
             </div>
           )}
 
-          <div style={{ marginTop: 24, fontSize: 17, lineHeight: 1.7, color: '#3D4A41' }}>
-            {excerpt}
+          <div style={{ marginTop: 24, minWidth: 0 }}>
+            {type.quote ? (
+              <div style={{ borderLeft: '3px solid #D9622B', paddingLeft: 14 }}>
+                <div
+                  style={{
+                    fontSize: 17,
+                    lineHeight: 1.5,
+                    color: '#3D4A41',
+                    fontFamily: fontSans,
+                  }}
+                >
+                  “{type.quote.text}”
+                </div>
+                <div
+                  style={{
+                    marginTop: 7,
+                    fontSize: 12,
+                    letterSpacing: '0.16em',
+                    color: '#3D4A41',
+                    fontFamily: fontCond,
+                    textTransform: 'uppercase',
+                  }}
+                >
+                  — {type.quote.by}
+                </div>
+              </div>
+            ) : (
+              <div style={{ fontSize: 15, lineHeight: 1.7, color: '#3D4A41' }}>{excerpt}</div>
+            )}
           </div>
         </div>
       </div>
 
-      <div style={{ flex: 1 }} />
-
       {/* setup strip */}
       <div
         style={{
+          marginTop: 26,
           borderTop: '2px solid rgba(22,36,28,0.22)',
-          paddingTop: 20,
+          paddingTop: 18,
           display: 'flex',
           gap: 24,
           position: 'relative',
@@ -218,45 +241,20 @@ export const ShareCard = forwardRef<
           <div key={g.label} style={{ flex: 1 }}>
             <div
               style={{
-                fontSize: 13,
+                fontSize: 12,
                 letterSpacing: '0.26em',
                 color: '#3D4A41',
                 textTransform: 'uppercase',
                 fontFamily: fontCond,
                 fontWeight: 600,
-                marginBottom: 8,
+                marginBottom: 6,
               }}
             >
               {g.label}
             </div>
-            <div style={{ fontSize: 21, fontWeight: 600, lineHeight: 1.3 }}>{g.value}</div>
+            <div style={{ fontSize: 20, fontWeight: 600, lineHeight: 1.3 }}>{g.value}</div>
           </div>
         ))}
-      </div>
-
-      {/* one thing */}
-      <div
-        style={{
-          marginTop: 26,
-          borderLeft: '4px solid #D9622B',
-          paddingLeft: 18,
-          position: 'relative',
-        }}
-      >
-        <div
-          style={{
-            fontSize: 13,
-            letterSpacing: '0.26em',
-            color: '#D9622B',
-            textTransform: 'uppercase',
-            fontFamily: fontCond,
-            fontWeight: 700,
-            marginBottom: 8,
-          }}
-        >
-          One Thing
-        </div>
-        <div style={{ fontSize: 20, lineHeight: 1.6, color: '#16241C' }}>{type.training}</div>
       </div>
 
       <div style={{ flex: 1 }} />
@@ -267,54 +265,95 @@ export const ShareCard = forwardRef<
           margin: '0 -56px -56px',
           background: '#1F4D3A',
           color: '#F5EFE3',
-          padding: '32px 56px 36px',
+          padding: '26px 56px 22px',
           display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'flex-end',
+          flexDirection: 'column',
+          gap: 18,
           position: 'relative',
         }}
       >
-        <div>
-          <div
-            style={{
-              fontSize: 13,
-              letterSpacing: '0.3em',
-              color: '#D8EF52',
-              fontWeight: 700,
-              textTransform: 'uppercase',
-              fontFamily: fontCond,
-            }}
-          >
-            Archetype Player
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: 24 }}>
+          <div style={{ flex: 1 }}>
+            <div
+              style={{
+                fontSize: 12,
+                letterSpacing: '0.3em',
+                color: '#D8EF52',
+                fontWeight: 700,
+                textTransform: 'uppercase',
+                fontFamily: fontCond,
+                marginBottom: 10,
+              }}
+            >
+              Archetype Player
+            </div>
+            {type.players.map((p) => (
+              <div key={p.name} style={{ marginBottom: 8 }}>
+                <span style={{ fontSize: 27, fontWeight: 700 }}>{p.name}</span>
+                <span
+                  style={{
+                    fontSize: 15,
+                    color: '#D8EF52',
+                    marginLeft: 10,
+                    letterSpacing: '0.04em',
+                  }}
+                >
+                  {p.title}
+                </span>
+              </div>
+            ))}
           </div>
-          <div style={{ fontSize: 32, fontWeight: 700, marginTop: 7 }}>
-            {type.players[0]?.name}
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <div
+              style={{
+                background: '#F5EFE3',
+                padding: 9,
+                lineHeight: 0,
+                flexShrink: 0,
+              }}
+            >
+              <img src="/qr.svg" alt="" width={96} height={96} style={{ display: 'block' }} />
+            </div>
+            <div style={{ fontSize: 14, lineHeight: 1.5, color: 'rgba(245,239,227,0.72)' }}>
+              扫码
+              <br />
+              测一测
+            </div>
           </div>
         </div>
-        <div style={{ textAlign: 'right' }}>
-          <div
-            style={{
-              fontSize: 17,
-              letterSpacing: '0.14em',
-              color: '#F5EFE3',
-              fontFamily: fontCond,
-              fontWeight: 600,
-            }}
-          >
-            {site}
-          </div>
-          <div
+
+        <div
+          style={{
+            borderTop: '1px solid rgba(245,239,227,0.22)',
+            paddingTop: 12,
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'baseline',
+            gap: 16,
+          }}
+        >
+          <span
             style={{
               fontSize: 14,
               letterSpacing: '0.12em',
               color: 'rgba(245,239,227,0.6)',
               fontFamily: fontCond,
-              fontWeight: 500,
-              marginTop: 4,
             }}
           >
             {handle}
-          </div>
+          </span>
+          <span
+            style={{
+              fontSize: 15,
+              letterSpacing: '0.08em',
+              color: 'rgba(245,239,227,0.85)',
+              fontFamily: fontCond,
+              fontWeight: 600,
+            }}
+          >
+            Tennis Style Type Indicator ｜ 网球人格 16 型
+          </span>
         </div>
       </div>
     </div>

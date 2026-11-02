@@ -160,14 +160,27 @@ export function Result({
       )}
 
       {/* archetype */}
-      <section className="mt-8 border-[1.5px] border-ink bg-green p-5 text-paper">
-        <div className="label text-[0.56rem] !text-paper/60">原型球员 · Archetype</div>
-        {type.players.map((p, i) => (
-          <div key={p.name} className={i > 0 ? 'mt-3 border-t border-paper/20 pt-3' : 'mt-3'}>
-            <div className="text-[1.15rem] font-bold">{p.name}</div>
-            <div className="mt-1 text-[0.8rem] leading-relaxed text-paper/75">{p.note}</div>
+      <section className="mt-8 border-[1.5px] border-ink bg-green text-paper">
+        <div className="border-b border-paper/20 px-5 py-3">
+          <div className="label text-[0.56rem] !text-paper/60">原型球员</div>
+        </div>
+        {type.players.map((p) => (
+          <div key={p.name} className="border-b border-paper/20 px-5 py-4 last:border-b-0">
+            <div className="flex flex-wrap items-baseline gap-x-2.5 gap-y-1">
+              <span className="text-[1.1rem] font-bold">{p.name}</span>
+              <span className="text-[0.68rem] tracking-[0.06em] text-ball">{p.title}</span>
+            </div>
+            <div className="mt-1 text-[0.8rem] leading-relaxed text-paper/70">{p.note}</div>
           </div>
         ))}
+        {type.quote && (
+          <blockquote className="border-t border-paper/20 px-5 py-4">
+            <p className="text-[0.92rem] leading-[1.65] text-paper/90">“{type.quote.text}”</p>
+            <cite className="mt-2 block font-cond text-[0.7rem] tracking-[0.16em] text-paper/50 uppercase not-italic">
+              — {type.quote.by}
+            </cite>
+          </blockquote>
+        )}
       </section>
 
       {/* summary */}
@@ -187,7 +200,7 @@ export function Result({
 
       {/* strengths / weaknesses */}
       <section className="mt-8">
-        <SectionTitle label="优势与死穴" en="Pros & Cons" />
+        <SectionTitle label="优势与痛点" en="Pros & Cons" />
         <div className="grid gap-2.5">
           <div className="border-[1.5px] border-ink p-4">
             <div className="mb-2 flex items-center gap-2">
@@ -206,7 +219,7 @@ export function Result({
           <div className="border-[1.5px] border-ink p-4">
             <div className="mb-2 flex items-center gap-2">
               <span className="h-2 w-2 bg-clay" />
-              <span className="font-cond text-sm font-bold tracking-[0.18em] uppercase">你的死穴</span>
+              <span className="font-cond text-sm font-bold tracking-[0.18em] uppercase">你的痛点</span>
             </div>
             <ul className="space-y-1.5">
               {type.weaknesses.map((s) => (
@@ -241,12 +254,6 @@ export function Result({
           <PartnerCard label="最佳搭子" code={type.bestPartner} tone="green" onPick={onPickType} />
           <PartnerCard label="最怕遇到" code={type.nightmare} tone="clay" onPick={onPickType} />
         </div>
-      </section>
-
-      {/* training */}
-      <section className="mt-8 border-[1.5px] border-ink bg-paper-2 p-5">
-        <div className="label mb-2 text-[0.56rem]">教练处方 · One Thing</div>
-        <p className="text-[0.95rem] leading-relaxed">{type.training}</p>
       </section>
 
       {/* actions */}
