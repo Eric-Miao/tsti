@@ -49,7 +49,7 @@ export const TYPE_NAMES: Record<string, TypeName> = {
     tagline: '上来就是一刀，绝不给你第二拍',
   },
   ENFD: {
-    name: '网前铁闸',
+    name: '奇幻城堡',
     en: 'The Net Wall',
     tagline: '双打里那个把半场焊死的人',
   },
