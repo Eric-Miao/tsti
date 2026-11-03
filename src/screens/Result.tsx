@@ -70,18 +70,29 @@ export function Result({
   async function makeCard() {
     if (!cardRef.current || busy) return
     setBusy(true)
+    const node = cardRef.current
+    const withTimeout = <T,>(p: Promise<T>, ms: number) =>
+      Promise.race([
+        p,
+        new Promise<T>((_, reject) => setTimeout(() => reject(new Error(`card timeout ${ms}ms`)), ms)),
+      ])
+
     try {
       const { toPng } = await import('html-to-image')
-      await document.fonts.ready
-      const url = await toPng(cardRef.current, { pixelRatio: 1, cacheBust: true })
+      await withTimeout(document.fonts.ready, 3000)
+      const url = await withTimeout(
+        toPng(node, { pixelRatio: 1, cacheBust: false }),
+        20000,
+      )
       setCardUrl(url)
-    } catch {
+    } catch (err) {
+      console.error('[TSTI] 分享卡片生成失败', err)
       try {
         const { toPng } = await import('html-to-image')
-        const url = await toPng(cardRef.current, { pixelRatio: 1, skipFonts: true })
+        const url = await withTimeout(toPng(node, { pixelRatio: 1, skipFonts: true }), 20000)
         setCardUrl(url)
-      } catch {
-        /* give up quietly */
+      } catch (err2) {
+        console.error('[TSTI] 分享卡片重试也失败', err2)
       }
     } finally {
       setBusy(false)
