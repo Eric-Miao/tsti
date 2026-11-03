@@ -56,6 +56,18 @@ export function CardTemplate({ type, index, artSrc, qrSrc, handle }: CardProps) 
         }}
       />
 
+      {/* 图与色块之间的渐变过渡 */}
+      <div
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          bottom: 880,
+          height: 260,
+          backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0), ${bg})`,
+        }}
+      />
+
       {/* 居中信息块 */}
       <div
         style={{
