@@ -21,8 +21,6 @@ export interface TennisType {
   weaknesses: string[]
   gear: { label: string; value: string }[]
   doubles: string
-  bestPartner: string
-  nightmare: string
   training: string
 }
 
@@ -58,8 +56,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '红土最舒服' },
     ],
     doubles: '底线主攻，把球打到对方网前那个人脚下',
-    bestPartner: 'ENFD',
-    nightmare: 'IBFD',
     training: '练第三板。第一板重不稀奇，第二板还能一样重才算数。',
   },
 
@@ -86,8 +82,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '红土、慢硬地' },
     ],
     doubles: '底线兜底，把球吊深让搭档抢网',
-    bestPartner: 'ENFA',
-    nightmare: 'ENFA',
     training: '每周打一次"只许进攻"的练习赛。你需要长出一两个能自己结束分数的球。',
   },
 
@@ -117,8 +111,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '快速硬地' },
     ],
     doubles: '底线重炮，接发直接抢攻',
-    bestPartner: 'ENFD',
-    nightmare: 'IBSD',
     training: '关键分只用七成力。你需要的是"可控的重"，不是每板都赌。',
   },
 
@@ -146,8 +138,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '硬地' },
     ],
     doubles: '底线兜底，偶尔上网偷袭',
-    bestPartner: 'ENFA',
-    nightmare: 'EBFA',
     training: '练"该结束就结束"。防守反击的最后一板，你要敢下手。',
   },
 
@@ -179,8 +169,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '快速硬地、草地' },
     ],
     doubles: '网前主攻，抢网积极',
-    bestPartner: 'IBSD',
-    nightmare: 'IBSD',
     training: '练被穿越之后的回位路线。你现在会站在原地看。',
   },
 
@@ -208,8 +196,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '红土、草地' },
     ],
     doubles: '网前变化，负责给搭档制造机会',
-    bestPartner: 'EBFA',
-    nightmare: 'EBFA',
     training: '每局至少打一板正常球。变化是武器，不是躲的地方。',
   },
 
@@ -236,8 +222,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '草地、快速硬地' },
     ],
     doubles: '网前猎手，从第一分抢到最后',
-    bestPartner: 'IBSD',
-    nightmare: 'IBSD',
     training: '练上网第一拍。发球之后那个截击，决定你这一分还有没有第二拍。',
   },
 
@@ -264,8 +248,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '硬地' },
     ],
     doubles: '网前后场全覆盖，负责封死斜线',
-    bestPartner: 'EBSA',
-    nightmare: 'ENSD',
     training: '练半步。网前不是站死，是每一拍都要微调站位。',
   },
 
@@ -293,8 +275,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '红土' },
     ],
     doubles: '底线重炮，负责把球打死',
-    bestPartner: 'ENFD',
-    nightmare: 'ENFA',
     training: '练接发抢点。别每次都让球把你推到三米外再开始打。',
   },
 
@@ -322,8 +302,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '硬地' },
     ],
     doubles: '底线核心，负责不丢',
-    bestPartner: 'ENFA',
-    nightmare: 'ENFA',
     training: '机会球必须下手。你太容易把优势球也打成相持。',
   },
 
@@ -353,8 +331,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '硬地' },
     ],
     doubles: '底线主攻',
-    bestPartner: 'ENFD',
-    nightmare: 'IBSD',
     training: '练被动球的过渡。不是每一板都要用同一种力度。',
   },
 
@@ -382,8 +358,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '任何场地' },
     ],
     doubles: '底线保底',
-    bestPartner: 'ENFA',
-    nightmare: 'EBFA',
     training: '练一记必须要有的得分手段。哪怕是发球也行。',
   },
 
@@ -411,8 +385,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '草地、快速硬地' },
     ],
     doubles: '网前技术流',
-    bestPartner: 'IBSD',
-    nightmare: 'IBFA',
     training: '练二发的旋转和落点。那是你上网的门票。',
   },
 
@@ -441,8 +413,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '草地、红土' },
     ],
     doubles: '网前变化，负责制造机会',
-    bestPartner: 'EBFA',
-    nightmare: 'EBFA',
     training: '练一板硬的。不能所有球都用巧劲。',
   },
 
@@ -474,8 +444,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '草地' },
     ],
     doubles: '网前终结者',
-    bestPartner: 'IBSD',
-    nightmare: 'IBSD',
     training: '练被动情况下的防守。你现在的球，只在顺风时好看。',
   },
 
@@ -503,8 +471,6 @@ const PROFILES: Record<string, TypeProfile> = {
       { label: '场地', value: '硬地' },
     ],
     doubles: '网前铁闸，负责所有斜线',
-    bestPartner: 'IBSA',
-    nightmare: 'ENSD',
     training: '练第一截击的深度。别只求过网。',
   },
 }

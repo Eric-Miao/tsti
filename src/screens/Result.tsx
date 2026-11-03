@@ -5,6 +5,7 @@ import { TypeArt } from '../components/TypeArt'
 import { DimensionReadout } from '../components/DimBars'
 import { Ball } from '../components/Ball'
 import { fetchStats, recordResult } from '../lib/stats'
+import { bestPartner, nightmare } from '../lib/pairing'
 
 export function Result({
   code,
@@ -262,8 +263,8 @@ export function Result({
         <SectionTitle label="双打定位" en="Doubles" />
         <p className="text-[0.92rem] leading-relaxed text-ink-soft">{type.doubles}</p>
         <div className="mt-4 grid grid-cols-2 gap-2.5">
-          <PartnerCard label="最佳搭子" code={type.bestPartner} tone="green" onPick={onPickType} />
-          <PartnerCard label="最怕遇到" code={type.nightmare} tone="clay" onPick={onPickType} />
+          <PartnerCard label="最佳搭子" code={bestPartner(type.code)} tone="green" onPick={onPickType} />
+          <PartnerCard label="最怕遇到" code={nightmare(type.code)} tone="clay" onPick={onPickType} />
         </div>
       </section>
 
