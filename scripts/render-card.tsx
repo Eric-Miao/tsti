@@ -41,7 +41,7 @@ const element = CardTemplate({
   handle: '@Eric-Miao',
 })
 
-const svg = await satori(element as any, { width: 1080, height: 1440, fonts })
+const svg = await satori(element as any, { width: 1080, height: 1920, fonts })
 fs.writeFileSync('/tmp/card-server.svg', svg)
 const png = new Resvg(svg, { fitTo: { mode: 'width', value: 1080 } }).render().asPng()
 fs.writeFileSync('/tmp/card-server.png', png)

@@ -1,6 +1,5 @@
 import React from 'react'
 import type { TennisType } from '../src/data/types'
-import { DIMENSIONS } from '../src/data/questions'
 
 export interface CardProps {
   type: TennisType
@@ -12,18 +11,28 @@ export interface CardProps {
 
 const C = {
   paper: '#F5EFE3',
-  ball: '#D8EF52',
+  ink: '#16241C',
+  green: '#1F4D3A',
+  yellow: '#D8EF52',
 }
 
-const AXES = ['EI', 'BN', 'SF', 'AD'] as const
-
-/** 场地决定色块：上旋=红土 / 网前平击=草地 / 底线平击=硬地 */
 function blockColor(code: string) {
   const [, pos, spin] = code.split('')
   if (spin === 'S') return '#B84D1E'
   if (pos === 'N') return '#4F6B48'
   return '#34506B'
 }
+
+/** 每张插图的构图不同，个别需要放大并重新对焦（z=放大倍数，f=纵向对焦 0顶 1底） */
+const FOCUS: Record<string, { z: number; f: number }> = {
+  IBSD: { z: 1.5, f: 0.06 },
+  IBFD: { z: 1.3, f: 0.16 },
+  INFD: { z: 1.18, f: 0.1 },
+}
+
+const IMAGE_H = 1240
+const CREAM_H = 410
+const FOOTER_H = 270
 
 export function CardTemplate({ type, index, artSrc, qrSrc, handle }: CardProps) {
   const bg = blockColor(type.code)
@@ -32,177 +41,166 @@ export function CardTemplate({ type, index, artSrc, qrSrc, handle }: CardProps) 
     <div
       style={{
         width: 1080,
-        height: 1440,
+        height: 1920,
         display: 'flex',
-        position: 'relative',
-        background: bg,
-        color: C.paper,
+        flexDirection: 'column',
+        background: C.paper,
+        color: C.ink,
         fontFamily: 'Noto',
       }}
     >
-      {/* 满幅插图 */}
-      <img
-        src={artSrc}
-        width={1080}
-        height={1440}
+      {/* 插图 0–1240 */}
+      <div style={{ width: 1080, height: IMAGE_H, overflow: 'hidden', flexShrink: 0 }}>
+        <img
+          src={artSrc}
+          style={{
+            width: 1080 * (FOCUS[type.code]?.z ?? 1),
+            height: IMAGE_H * (FOCUS[type.code]?.z ?? 1),
+            objectFit: 'cover',
+            objectPosition: 'center top',
+            marginLeft: -(1080 * ((FOCUS[type.code]?.z ?? 1) - 1)) / 2,
+            marginTop: -(IMAGE_H * ((FOCUS[type.code]?.z ?? 1) - 1)) * (FOCUS[type.code]?.f ?? 0),
+          }}
+        />
+      </div>
+
+      {/* 奶油信息面 1240–1720 */}
+      <div
         style={{
-          position: 'absolute',
-          left: 0,
-          top: 0,
           width: 1080,
-          height: 1440,
-          objectFit: 'cover',
-          objectPosition: 'center top',
-        }}
-      />
-
-      {/* 图与色块之间的渐变过渡 */}
-      <div
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: 880,
-          height: 260,
-          backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0), ${bg})`,
-        }}
-      />
-
-      {/* 居中信息块 */}
-      <div
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: 880,
-          background: bg,
+          height: CREAM_H,
+          flexShrink: 0,
           display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          padding: '0 64px',
+          paddingTop: 32,
         }}
       >
-        <div
-          style={{
-            fontFamily: 'Archivo',
-            fontSize: 196,
-            lineHeight: 0.9,
-            letterSpacing: 4,
-          }}
-        >
-          {type.code}
-        </div>
-
-        <div style={{ fontSize: 62, fontWeight: 700, marginTop: 14, lineHeight: 1.1 }}>
-          {type.name}
-        </div>
-
-        <div
-          style={{
-            fontSize: 28,
-            lineHeight: 1.5,
-            marginTop: 16,
-            color: 'rgba(245,239,227,0.85)',
-            textAlign: 'center',
-            maxWidth: 820,
-          }}
-        >
-          {type.tagline}
-        </div>
-
-        <div
-          style={{
-            fontSize: 21,
-            lineHeight: 1.6,
-            marginTop: 12,
-            color: 'rgba(245,239,227,0.62)',
-            textAlign: 'center',
-            maxWidth: 760,
-          }}
-        >
-          {type.summary.split('。')[0]}。
-        </div>
-
-        <div style={{ display: 'flex', gap: 14, marginTop: 26 }}>
-          {type.code.split('').map((l, i) => {
-            const meta = DIMENSIONS[AXES[i]]
-            const label = l === meta.left ? meta.leftLabel : meta.rightLabel
-            return (
-              <div
-                key={l}
-                style={{
-                  display: 'flex',
-                  alignItems: 'baseline',
-                  border: '2px solid rgba(245,239,227,0.5)',
-                  padding: '9px 18px',
-                }}
-              >
-                <div style={{ fontFamily: 'Archivo', fontSize: 24 }}>{l}</div>
-                <div style={{ fontSize: 22, marginLeft: 9, color: 'rgba(245,239,227,0.85)' }}>
-                  {label}
-                </div>
-              </div>
-            )
-          })}
-        </div>
-
-        <div
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 26,
-            marginTop: 32,
-          }}
-        >
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 9 }}>
-            <div style={{ display: 'flex', background: C.paper, padding: 12 }}>
-              <img src={qrSrc} width={150} height={150} style={{ width: 150, height: 150 }} />
+        <div style={{ display: 'flex', width: 952, marginLeft: 64 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', width: 600 }}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                background: C.yellow,
+                padding: '8px 16px',
+              }}
+            >
+              <div style={{ fontSize: 26, fontWeight: 700, color: C.green }}>网球人格测试</div>
             </div>
-            <div style={{ fontSize: 20, color: 'rgba(245,239,227,0.8)' }}>扫码测一测</div>
+            <div
+              style={{
+                display: 'flex',
+                marginLeft: 14,
+                fontFamily: 'Archivo',
+                fontSize: 22,
+                letterSpacing: 2,
+                color: C.green,
+              }}
+            >
+              TSTI
+            </div>
           </div>
 
           <div
             style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 10,
-              borderLeft: '2px solid rgba(245,239,227,0.3)',
-              paddingLeft: 26,
-              width: 470,
+              fontFamily: 'Archivo',
+              fontSize: 168,
+              lineHeight: 0.92,
+              color: C.green,
+              marginTop: 18,
             }}
           >
-            {type.players.slice(0, 2).map((p) => (
-              <div key={p.name} style={{ display: 'flex', flexDirection: 'column' }}>
-                <div style={{ display: 'flex', alignItems: 'baseline' }}>
-                  <div style={{ fontSize: 28, fontWeight: 700 }}>{p.name}</div>
-                  <div style={{ fontSize: 17, color: C.ball, marginLeft: 10 }}>{p.title}</div>
-                </div>
-              </div>
-            ))}
-            {type.players.length > 2 && (
-              <div style={{ display: 'flex', fontSize: 17, color: 'rgba(245,239,227,0.65)' }}>
-                同型还有 {type.players.slice(2).map((p) => p.name).join('、')}
-              </div>
-            )}
+            {type.code}
           </div>
+
+          <div style={{ fontSize: 58, fontWeight: 700, lineHeight: 1.15, marginTop: 4 }}>
+            {type.name}
+          </div>
+
+          <div
+            style={{
+              fontSize: 25,
+              lineHeight: 1.5,
+              marginTop: 12,
+              color: '#3A4A40',
+              width: 600,
+            }}
+          >
+            {type.tagline}
+          </div>
+        </div>
+
+        {/* 二维码 */}
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            marginLeft: 'auto',
+            width: 288,
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              background: '#FFFFFF',
+              padding: 36,
+            }}
+          >
+            <img src={qrSrc} width={216} height={216} style={{ width: 216, height: 216 }} />
+          </div>
+          <div
+            style={{
+              fontSize: 20,
+              color: C.green,
+              marginTop: 10,
+              width: 288,
+              textAlign: 'center',
+            }}
+          >
+            扫码或访问 tsti.site
+          </div>
+        </div>
+        </div>
+      </div>
+
+      {/* 色块页脚 1720–1920 */}
+      <div
+        style={{
+          width: 1080,
+          height: FOOTER_H,
+          flexShrink: 0,
+          background: bg,
+          color: '#FFFFFF',
+          display: 'flex',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{ display: 'flex', width: 952, marginLeft: 64 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', width: 700 }}>
+          {type.players.slice(0, 2).map((p) => (
+            <div key={p.name} style={{ display: 'flex', alignItems: 'baseline', marginBottom: 6 }}>
+              <div style={{ fontSize: 26, fontWeight: 700 }}>{p.name}</div>
+              <div style={{ fontSize: 18, marginLeft: 10, color: 'rgba(255,255,255,0.85)' }}>
+                {p.title}
+              </div>
+            </div>
+          ))}
         </div>
 
         <div
           style={{
             display: 'flex',
-            justifyContent: 'space-between',
-            width: '100%',
-            marginTop: 34,
-            fontFamily: 'Barlow',
-            fontSize: 16,
-            letterSpacing: 2,
-            color: 'rgba(245,239,227,0.55)',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            marginLeft: 'auto',
           }}
         >
-          <div style={{ display: 'flex' }}>{handle}</div>
-          <div style={{ display: 'flex' }}>TSTI · 第 {String(index).padStart(2, '0')} / 16 型</div>
+          <div style={{ fontSize: 20, fontWeight: 700 }}>第 {String(index).padStart(2, '0')} / 16 型</div>
+          <div style={{ fontFamily: 'Barlow', fontSize: 17, marginTop: 6, color: 'rgba(255,255,255,0.85)' }}>
+            {handle}
+          </div>
+        </div>
         </div>
       </div>
     </div>
