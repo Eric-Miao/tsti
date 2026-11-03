@@ -16,18 +16,14 @@ create table if not exists public.tsti_results (
   created_at timestamptz not null default now()
 );
 
+-- 只走函数，不直接开表权限：
+-- 前端的 anon key 是公开的，能做的事越少越好。
 alter table public.tsti_results enable row level security;
-
--- 匿名用户只能写入/更新自己的那一条，读不到别人的
+revoke all on public.tsti_results from anon, authenticated;
 drop policy if exists "anon upsert" on public.tsti_results;
-create policy "anon upsert" on public.tsti_results
-  for insert to anon with check (true);
-
 drop policy if exists "anon update" on public.tsti_results;
-create policy "anon update" on public.tsti_results
-  for update to anon using (true) with check (true);
 
--- 只暴露聚合结果
+-- 聚合统计：只返回总数和每个类型的计数，不暴露任何单条记录
 create or replace function public.tsti_stats()
 returns jsonb
 language sql
@@ -50,8 +46,7 @@ $$;
 revoke all on function public.tsti_stats() from public;
 grant execute on function public.tsti_stats() to anon;
 
--- 写入走 security definer：不需要给 anon 开 SELECT 策略，
--- 也就不会把任何人的原始记录暴露出去
+-- 写入：同一台设备覆盖自己那条，不新增
 create or replace function public.tsti_record(
   p_client text,
   p_code text,
