@@ -299,7 +299,7 @@ export function Result({
             </button>
           </div>
           <div className="flex-1 overflow-auto" onClick={(e) => e.stopPropagation()}>
-            <img src={cardUrl} alt="分享卡片" className="mx-auto w-full max-w-[420px]" />
+            <img src={cardUrl} alt="分享卡片" style={{ width: '100%', maxWidth: 420, height: 'auto', display: 'block', margin: '0 auto' }} />
           </div>
           <button className="btn-primary mt-3" onClick={shareCard}>
             分享 / 保存到相册
