@@ -1,7 +1,16 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
+import { SUPABASE_FALLBACK, looksLikePublicKey } from '../config'
 
-const url = import.meta.env.VITE_SUPABASE_URL as string | undefined
-const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
+const envUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined
+const envKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
+
+const url = envUrl && envUrl.includes('.supabase.co') ? envUrl : SUPABASE_FALLBACK.url
+
+// 环境变量填错（例如误填了管理令牌）时回退到内置的 anon key，避免把敏感 key 打进前端
+if (envKey && !looksLikePublicKey(envKey)) {
+  console.warn('[TSTI] VITE_SUPABASE_ANON_KEY 不是合法的公开 key，已回退到内置配置')
+}
+const anonKey = looksLikePublicKey(envKey) ? envKey! : SUPABASE_FALLBACK.anonKey
 
 export const supabaseEnabled = Boolean(url && anonKey)
 
