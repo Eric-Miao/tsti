@@ -8,17 +8,14 @@ export const SITE = {
 }
 
 /**
- * Supabase 默认配置。
- * anon key 是设计上就公开的（RLS 会挡住越权读取），所以直接内置；
- * 环境变量里如果填了合法的 key 会优先生效。
+ * anon key 只从环境变量读取，不进仓库。
+ * 本地开发放 .env，线上放 Vercel 的 Environment Variables。
+ * 值本身是公开的（会打进前端 bundle），但轮换时不该在 git 里留副本。
  */
-export const SUPABASE_FALLBACK = {
-  url: 'https://mjkepegxfhsxghdhjjiz.supabase.co',
-  anonKey:
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qa2VwZWd4ZmhzeGdoZGhqaml6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM2MzYzNTgsImV4cCI6MjEwOTIxMjM1OH0.c2a0oAKeqMQMrpoGDhxajqoiTb5QpvnrDecy0m9CQWc',
-}
+export const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string | undefined
+export const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
 
-/** 只有 JWT 形态（eyJ...）或新版 publishable key 才认，防止把管理令牌打进前端 */
+/** 只认 JWT 形态（eyJ...）和新版 publishable key */
 export function looksLikePublicKey(key?: string): boolean {
   if (!key) return false
   return key.startsWith('eyJ') || key.startsWith('sb_publishable_')

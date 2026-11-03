@@ -34,9 +34,13 @@ npm run dev
 复制 `.env.example` 为 `.env`：
 
 ```
-VITE_SUPABASE_URL=
+VITE_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
 VITE_SUPABASE_ANON_KEY=
 ```
+
+只放**公开 key**（anon key `eyJ...` 或 publishable key `sb_publishable_...`）。这些值会被打进前端 bundle，靠 RLS 兜底，本来就是公开的。
+
+不要放管理令牌（`sbp_...`）或 service_role / secret key。`vite.config.ts` 会在构建期直接报错拦下来。
 
 不填也能跑，只是页面里不显示「已有 N 人测过」「X% 同型」这些统计。
 
