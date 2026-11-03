@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Ball } from '../components/Ball'
 import { DimensionLegend } from '../components/DimBars'
 import { TYPES } from '../data/types'
-import { fetchStats, type Stats } from '../lib/supabase'
+import { fetchStats, type Stats } from '../lib/stats'
 
 export function Landing({
   onStart,

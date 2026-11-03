@@ -4,7 +4,7 @@ import { ShareCard } from '../components/ShareCard'
 import { TypeArt } from '../components/TypeArt'
 import { DimensionReadout } from '../components/DimBars'
 import { Ball } from '../components/Ball'
-import { fetchStats, recordResult } from '../lib/supabase'
+import { fetchStats, recordResult } from '../lib/stats'
 
 export function Result({
   code,
