@@ -52,21 +52,18 @@ export async function recordResult(payload: {
   try {
     const supabase = await getClient()
     if (!supabase) return
-    await supabase.from('tsti_results').upsert(
-      {
-        client_id: clientId(),
-        code: payload.code,
-        e: payload.scores.E ?? 0,
-        i: payload.scores.I ?? 0,
-        b: payload.scores.B ?? 0,
-        n: payload.scores.N ?? 0,
-        s: payload.scores.S ?? 0,
-        f: payload.scores.F ?? 0,
-        a: payload.scores.A ?? 0,
-        d: payload.scores.D ?? 0,
-      },
-      { onConflict: 'client_id' },
-    )
+    await supabase.rpc('tsti_record', {
+      p_client: clientId(),
+      p_code: payload.code,
+      p_e: payload.scores.E ?? 0,
+      p_i: payload.scores.I ?? 0,
+      p_b: payload.scores.B ?? 0,
+      p_n: payload.scores.N ?? 0,
+      p_s: payload.scores.S ?? 0,
+      p_f: payload.scores.F ?? 0,
+      p_a: payload.scores.A ?? 0,
+      p_d: payload.scores.D ?? 0,
+    })
   } catch {
     /* stats are best-effort */
   }

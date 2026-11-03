@@ -49,3 +49,30 @@ $$;
 
 revoke all on function public.tsti_stats() from public;
 grant execute on function public.tsti_stats() to anon;
+
+-- 写入走 security definer：不需要给 anon 开 SELECT 策略，
+-- 也就不会把任何人的原始记录暴露出去
+create or replace function public.tsti_record(
+  p_client text,
+  p_code text,
+  p_e int, p_i int, p_b int, p_n int,
+  p_s int, p_f int, p_a int, p_d int
+)
+returns void
+language sql
+security definer
+set search_path = public
+as $$
+  insert into public.tsti_results (client_id, code, e, i, b, n, s, f, a, d)
+  values (p_client, p_code, p_e, p_i, p_b, p_n, p_s, p_f, p_a, p_d)
+  on conflict (client_id) do update set
+    code = excluded.code,
+    e = excluded.e, i = excluded.i,
+    b = excluded.b, n = excluded.n,
+    s = excluded.s, f = excluded.f,
+    a = excluded.a, d = excluded.d,
+    created_at = now();
+$$;
+
+revoke all on function public.tsti_record(text, text, int, int, int, int, int, int, int, int) from public;
+grant execute on function public.tsti_record(text, text, int, int, int, int, int, int, int, int) to anon;
