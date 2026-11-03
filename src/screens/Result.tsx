@@ -23,7 +23,6 @@ export function Result({
 }) {
   const type = TYPES[code]
   const [cardUrl, setCardUrl] = useState<string | null>(null)
-  const [busy, setBusy] = useState(false)
   const [cardError, setCardError] = useState(false)
   const [samePct, setSamePct] = useState<number | null>(null)
   const [total, setTotal] = useState<number | null>(null)
@@ -67,25 +66,9 @@ export function Result({
     })
   }, [code, isOwn, dims])
 
-  async function makeCard() {
-    if (busy) return
-    setBusy(true)
+  function makeCard() {
     setCardError(false)
-    try {
-      const d = dimensionResults?.length
-        ? dimensionResults.map((x) => `${x.leftCount}${x.rightCount}`).join(',')
-        : '43,43,43,43'
-      const res = await fetch(`/api/card?c=${type.code}&d=${d}`)
-      if (!res.ok) throw new Error(`card api ${res.status}`)
-      const blob = await res.blob()
-      if (cardUrl) URL.revokeObjectURL(cardUrl)
-      setCardUrl(URL.createObjectURL(blob))
-    } catch (err) {
-      console.error('[TSTI] 分享卡片生成失败', err)
-      setCardError(true)
-    } finally {
-      setBusy(false)
-    }
+    setCardUrl(`/cards/${type.code}.png`)
   }
 
   async function shareCard() {
@@ -258,8 +241,8 @@ export function Result({
 
       {/* actions */}
       <section className="mt-8 space-y-2.5">
-        <button className="btn-primary" onClick={makeCard} disabled={busy}>
-          {busy ? '正在生成…' : cardError ? '生成失败，点一下重试' : '生成分享卡片'}
+        <button className="btn-primary" onClick={makeCard}>
+          {cardError ? '生成失败，点一下重试' : '查看分享卡片'}
         </button>
         {isOwn ? (
           <button className="btn-ghost w-full" onClick={onStart}>

@@ -9,11 +9,6 @@
       "destination": "/index.html"
     }
   ],
-  "functions": {
-    "api/card.tsx": {
-      "includeFiles": "public/**"
-    }
-  },
   "headers": [
     {
       "source": "/fonts/(.*)",

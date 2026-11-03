@@ -6,12 +6,14 @@ import type { DimensionResult } from '../src/lib/scoring'
 
 export interface CardProps {
   type: TennisType
-  dims: DimensionResult[]
+  dims?: DimensionResult[]
   index: number
   artSrc: string
   qrSrc: string
   handle: string
 }
+
+const AXES = ['EI', 'BN', 'SF', 'AD'] as const
 
 const C = {
   paper: '#F5EFE3',
@@ -26,7 +28,7 @@ const C = {
 /** satori 只支持 flex，不支持 grid，所以这里全部用 flex 版式 */
 export function CardTemplate({ type, dims, index, artSrc, qrSrc, handle }: CardProps) {
   const pairs: { dim: string; left: string; right: string; label: string; leftLabel: string; rightLabel: string; leftCount: number; rightCount: number; winner: string }[] =
-    dims.map((d) => {
+    (dims ?? []).map((d) => {
       const meta = DIMENSIONS[d.dim]
       return {
         dim: d.dim,
@@ -176,6 +178,22 @@ export function CardTemplate({ type, dims, index, artSrc, qrSrc, handle }: CardP
             >
               {type.quote ? `“${type.quote.text}” — ${type.quote.by}` : type.summary.split('。')[0] + '。'}
             </div>
+
+            <div style={{ display: 'flex', marginTop: 34, gap: 6 }}>
+              {type.code.split('').map((l, i) => {
+                const meta = DIMENSIONS[AXES[i]]
+                return (
+                  <div key={l} style={{ display: 'flex', flexDirection: 'column', width: 68 }}>
+                    <div style={{ fontFamily: 'Archivo', fontSize: 44, lineHeight: 1, color: C.green }}>
+                      {l}
+                    </div>
+                    <div style={{ fontFamily: 'Barlow', fontSize: 12, color: C.inkSoft, marginTop: 6 }}>
+                      {l === meta.left ? meta.leftLabel : meta.rightLabel}
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
           </div>
 
           {/* 档案编号 */}
@@ -200,14 +218,6 @@ export function CardTemplate({ type, dims, index, artSrc, qrSrc, handle }: CardP
               </div>
             </div>
             <div style={{ height: 3, background: C.ink, marginTop: 10 }} />
-            <div style={{ fontFamily: 'Barlow', fontSize: 14, color: C.inkSoft, marginTop: 8 }}>
-              {type.code.split('').map((l, i) => (
-                <span key={l} style={{ marginRight: 10 }}>
-                  <span style={{ fontWeight: 700, color: C.ink }}>{l}</span>{' '}
-                  {l === pairs[i].left ? pairs[i].leftLabel : pairs[i].rightLabel}
-                </span>
-              ))}
-            </div>
           </div>
         </div>
       </div>
