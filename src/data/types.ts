@@ -71,7 +71,7 @@ const PROFILES: Record<string, TypeProfile> = {
     ],
     profile: [
       { label: '站位', value: '底线后两米，几乎贴着挡板' },
-      { label: '得分来源', value: '等你自己打丢' },
+      { label: '得分来源', value: '靠覆盖范围把每一分拖长' },
       { label: '过网高度', value: '很高，落下来也慢' },
       { label: '节奏', value: '每板都一样，像节拍器' },
     ],
@@ -216,7 +216,7 @@ const PROFILES: Record<string, TypeProfile> = {
     profile: [
       { label: '站位', value: '发球线以内' },
       { label: '得分来源', value: '截击和高压' },
-      { label: '过网高度', value: '低平，冲着你身体来' },
+      { label: '过网高度', value: '低平，压向对手身体' },
       { label: '节奏', value: '快到你来不及引拍' },
     ],
     strengths: ['网前终结能力顶级', '气势压人，一分还没打对面已经退了', '敢在关键分上网'],
@@ -243,7 +243,7 @@ const PROFILES: Record<string, TypeProfile> = {
     ],
     profile: [
       { label: '站位', value: '网前正中，微微侧身' },
-      { label: '得分来源', value: '封死斜线，逼你打直线' },
+      { label: '得分来源', value: '封死斜线，逼对手打直线' },
       { label: '过网高度', value: '低' },
       { label: '节奏', value: '稳，几乎不出错' },
     ],
@@ -299,7 +299,7 @@ const PROFILES: Record<string, TypeProfile> = {
     ],
     profile: [
       { label: '站位', value: '底线内半步，接发站得很靠前' },
-      { label: '得分来源', value: '把你拖进第十拍' },
+      { label: '得分来源', value: '把每一分都拖到第十拍' },
       { label: '过网高度', value: '中等，落点永远在深处' },
       { label: '节奏', value: '稳，但每一板都在变线' },
     ],
@@ -356,7 +356,7 @@ const PROFILES: Record<string, TypeProfile> = {
     ],
     profile: [
       { label: '站位', value: '底线后半步' },
-      { label: '得分来源', value: '你自己打丢' },
+      { label: '得分来源', value: '靠落点深度让对手先乱' },
       { label: '过网高度', value: '中低，落点稳定' },
       { label: '节奏', value: '从头到尾一样' },
     ],

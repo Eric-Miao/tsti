@@ -16,42 +16,42 @@ export const TYPE_NAMES: Record<string, TypeName> = {
   EBSA: {
     name: '机关枪',
     en: 'The Baseline Machine Gun',
-    tagline: '「再打一板」，是你这场最常说的话。',
+    tagline: '观众还没坐稳，你的正手已经连上三板。',
   },
   EBSD: {
     name: '永动机',
     en: 'The Human Metronome',
-    tagline: '别人第三盘开始喘，你才开始热身。',
+    tagline: '从这一角跑到那一角，你的喊声比脚步先到。',
   },
   EBFA: {
     name: '重炮',
     en: 'The Flatline Cannon',
-    tagline: '你从不打过渡球。打丢了也认。',
+    tagline: '球刚离拍，那声闷响已经替你说了话。',
   },
   EBFD: {
     name: '人墙',
     en: 'The Wall That Cheers',
-    tagline: '救球救出集锦，观众比对手先站起来。',
+    tagline: '球都快贴地了，你还能救回来，顺便转个身。',
   },
   ENSA: {
     name: '轰炸机',
     en: 'The Net Raider',
-    tagline: '你上网的速度，比他抬头的速度快。',
+    tagline: '你发球后往前迈的三步，就是对手全部的时间。',
   },
   ENSD: {
     name: '钓鱼佬',
     en: 'The Drop-Shot Angler',
-    tagline: '你放的小球，落点离网不到一米。',
+    tagline: '你每放一个小球都要摊手，像在说这球是风帮我放的。',
   },
   ENFA: {
     name: '刽子手',
     en: 'The Net Executioner',
-    tagline: '你往前压那一下，对面会退半步。',
+    tagline: '你上网那一刀下去，整个球场都听见了。',
   },
   ENFD: {
     name: '奇幻城堡',
     en: 'The Net Wall',
-    tagline: '双打里没人记得你的名字，只记得打不穿你。',
+    tagline: '你往网前一站，搭档就敢把整条斜线让给你。',
   },
   IBSA: {
     name: '闷炮',
@@ -71,7 +71,7 @@ export const TYPE_NAMES: Record<string, TypeName> = {
   IBFD: {
     name: '扫地僧',
     en: 'The Baseline Monk',
-    tagline: '你打球像在还房贷，一期一期，绝不逾期。',
+    tagline: '你打球越打越省力，第四盘还是开场那个节奏。',
   },
   INSA: {
     name: '暗器',
@@ -81,7 +81,7 @@ export const TYPE_NAMES: Record<string, TypeName> = {
   INSD: {
     name: '门神',
     en: 'The Net Magician',
-    tagline: '你每一拍都在问他：你现在站哪？',
+    tagline: '你放短球的手很轻，像把球放在网前的地上。',
   },
   INFA: {
     name: '冷面刺客',
@@ -91,6 +91,6 @@ export const TYPE_NAMES: Record<string, TypeName> = {
   INFD: {
     name: '铁闸',
     en: 'The Silent Gate',
-    tagline: '比分到 6-2，对面才发现你一直在那儿。',
+    tagline: '搭档回头看一眼，你还在网前那个位置上。',
   },
 }
