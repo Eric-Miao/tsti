@@ -35,7 +35,9 @@ const PROFILES: Record<string, TypeProfile> = {
       '你站在底线后面，但不是在那儿等。球还没落地你已经在想要打哪个角。上旋把球压得又高又深，节奏一板比一板快，对手刚适应一个速度，你换了个方向。打得顺的时候整片球场都跟着你动，打不顺的时候，那团火也烧自己。',
     players: [
       { name: '拉斐尔·纳达尔', title: '三巨头', note: '左手重上旋，把红土打成了自家后院' },
+      { name: '卡洛斯·阿尔卡拉斯', title: '世界第一', note: '把上旋和爆发力混在一起的下一代答案' },
       { name: '塞雷娜·威廉姆斯', title: '23 座大满贯', note: '底线一板一板压过来，声音比球还先到' },
+      { name: '郑钦文', title: '2024 巴黎奥运金牌', note: '正手重上旋，敢在关键分下手' },
     ],
     quote: {
       text: 'A champion is defined not by their wins but by how they can recover when they fall.',
@@ -95,7 +97,10 @@ const PROFILES: Record<string, TypeProfile> = {
       '你的字典里没有过渡球。每一板都当最后一板打，平击、低平、穿透。进的时候球场会安静一秒，失误的时候你自己先喊出来。',
     players: [
       { name: '胡安·马丁·德尔波特罗', title: '大菠萝', note: '那届连胜纳达尔和费德勒，正手一板过' },
+      { name: '亚历山大·兹维列夫', title: '2021 奥运金牌', note: '发球和反手都平，底线一站就是两小时' },
+      { name: '张之臻', title: '2024 巴黎奥运混双银牌', note: '一米九三，发球和正手都是重炮' },
       { name: '阿丽娜·萨巴伦卡', title: '世界第一', note: '发球和正手都用同一个音量' },
+      { name: '李娜', title: '两座大满贯', note: '正手平击，敢在关键分变线' },
     ],
     profile: [
       { label: '站位', value: '底线内半步，抢上升期' },
@@ -123,6 +128,7 @@ const PROFILES: Record<string, TypeProfile> = {
       '你是表演型防守。别人以为你在挨打，其实你在等他累。那些几乎救不到的球你能救回来，还顺手做个动作。观众喜欢你，对面恨你。',
     players: [
       { name: '加埃尔·孟菲尔斯', title: '两次大满贯四强', note: '跑动范围出了名的不讲道理' },
+      { name: '丹尼尔·梅德韦杰夫', title: '2021 美网冠军', note: '站位深到摄像机后，回球永远又深又平' },
       { name: '卡罗琳·沃兹尼亚奇', title: '丹麦甜心', note: '把防守打成一套完整战术的人' },
     ],
     profile: [
@@ -151,6 +157,7 @@ const PROFILES: Record<string, TypeProfile> = {
       '你把网前当终点线。发球上网、接发上网、相持里突然上网。截击不是挡过去，是带着旋往下砸。你打球的样子像在往前扑。',
     players: [
       { name: '帕特·拉夫特', title: '两届美网冠军', note: '发球上网配一手带旋的截击' },
+      { name: '本·谢尔顿', title: '2023 美网四强', note: '左手大炮，发完球就往网前冲' },
       { name: '玛蒂娜·纳芙拉蒂洛娃', title: '女金刚', note: '把网前变成主场的第一人' },
     ],
     quote: {
@@ -184,6 +191,7 @@ const PROFILES: Record<string, TypeProfile> = {
     players: [
       { name: '达斯汀·布朗', title: '2015 温网淘汰纳达尔', note: '上网和小球混着用，全靠手感' },
       { name: '阿兰查·桑切斯·维卡里奥', title: '4 座大满贯', note: '挑高球和防守反击的教科书' },
+      { name: '米拉·安德列娃', title: '2024 法网四强', note: '手感细，敢在关键分放小球' },
     ],
     profile: [
       { label: '站位', value: '中场游走，没有固定位置' },
@@ -267,6 +275,7 @@ const PROFILES: Record<string, TypeProfile> = {
       '你话不多，但你的球在说话。引拍大、旋转足、落点深，一板一板往上加。别人打到第三盘开始喘，你的球反而更重了。',
     players: [
       { name: '多米尼克·蒂姆', title: '2020 美网冠军', note: '单反重上旋，安静但每板都在加码' },
+      { name: '斯特凡诺斯·西西帕斯', title: '2021 法网亚军', note: '单反重上旋，正手一开就是大角度' },
       { name: '伊加·斯瓦泰克', title: '世界第一', note: '把上旋和滑步都练到极致的人' },
     ],
     profile: [
@@ -296,6 +305,7 @@ const PROFILES: Record<string, TypeProfile> = {
     players: [
       { name: '诺瓦克·德约科维奇', title: '三巨头', note: '接发、防守、反击，全都不动声色' },
       { name: '克里斯·埃弗特', title: '冰公主', note: '连续十三年每年至少一个大满贯' },
+      { name: '王蔷', title: '2019 美网八强', note: '防守反击，回球深，很少送分' },
     ],
     profile: [
       { label: '站位', value: '底线内半步，接发站得很靠前' },
@@ -322,8 +332,10 @@ const PROFILES: Record<string, TypeProfile> = {
     summary:
       '你不喊不叫，但每一板都在往前推。平击、低平、落点深，表情从第一分到最后都没变过。对手经常打完才发现：刚才那四局，自己一分都没主动拿到。',
     players: [
-      { name: '托马斯·伯蒂奇', title: '2010 温网亚军', note: '那届连胜费德勒和德约' },
+      { name: '扬尼克·辛纳', title: '世界第一', note: '平击干净，节奏快，脸上没表情' },
+      { name: '吴易昺', title: '2023 达拉斯站冠军', note: '中国男网第一个 ATP 单打冠军' },
       { name: '大坂直美', title: '4 座大满贯', note: '平击重炮，全程一个表情' },
+      { name: '叶莲娜·莱巴金娜', title: '2022 温网冠军', note: '发球和正手都平，也是一张扑克脸' },
     ],
     quote: { text: "It's okay to not be okay.", by: 'Naomi Osaka' },
     profile: [
@@ -353,6 +365,7 @@ const PROFILES: Record<string, TypeProfile> = {
     players: [
       { name: '尼古拉·达维登科', title: '2009 年终总决赛冠军', note: '平击、深球、零表情，纯效率' },
       { name: '金·克里斯特尔斯', title: '4 座大满贯', note: '复出第一站就拿了美网' },
+      { name: '杰西卡·佩古拉', title: '2024 美网亚军', note: '回球又平又深，很少送分' },
     ],
     profile: [
       { label: '站位', value: '底线后半步' },
@@ -381,6 +394,7 @@ const PROFILES: Record<string, TypeProfile> = {
     players: [
       { name: '斯蒂芬·埃德伯格', title: '6 座大满贯', note: '发球上网配优雅截击，安静地结束比赛' },
       { name: '玛蒂娜·辛吉斯', title: '瑞士公主', note: '16 岁登顶世界第一，网前手感极细' },
+      { name: '芭博拉·克雷吉茨科娃', title: '2021 法网冠军', note: '网前手感好，双打出身' },
     ],
     profile: [
       { label: '站位', value: '发球线内' },
@@ -408,7 +422,9 @@ const PROFILES: Record<string, TypeProfile> = {
       '你是那种让对手打完说"难受"的人。切削、放短、挑高、突然上网，你用最小的力量制造最大的麻烦。你从不着急，因为着急的总是对面。',
     players: [
       { name: '法布里斯·桑托罗', title: '魔术师', note: '正反手两种握拍，职业赛场打了 21 年' },
+      { name: '洛伦佐·穆塞蒂', title: '2024 温网四强', note: '单反优雅，网前手感是加分项' },
       { name: '阿什莉·巴蒂', title: '3 座大满贯', note: '切削加网前，安静地把对手拆掉' },
+      { name: '达莉亚·卡萨金娜', title: '2022 法网四强', note: '切削和变化多，节奏慢下来就赢' },
     ],
     profile: [
       { label: '站位', value: '中场游走' },
@@ -436,6 +452,7 @@ const PROFILES: Record<string, TypeProfile> = {
       '你的网球很安静，也很锋利。不多跑一步，也不多打一板。机会出现的那一下，你已经在前场，动作干净，落点精准，然后转身走回发球线。',
     players: [
       { name: '罗杰·费德勒', title: '三巨头', note: '效率、手感、优雅，一次上网解决一切' },
+      { name: '格里戈尔·迪米特洛夫', title: '2017 年终总决赛冠军', note: '单反加网前，动作好看且高效' },
       { name: '贾斯汀·海宁', title: '7 座大满贯', note: '单反加网前，个子不高但从不退' },
     ],
     quote: {
@@ -469,6 +486,7 @@ const PROFILES: Record<string, TypeProfile> = {
     players: [
       { name: '丹尼尔·内斯特', title: '12 座大满贯双打', note: '双打网前的长期统治者，安静而稳定' },
       { name: '郑洁', title: '两座大满贯双打', note: '2006 年澳网和温网，网前站位极准' },
+      { name: '张帅', title: '2019 澳网双打冠军', note: '双打网前扎实，底线也能磨' },
     ],
     profile: [
       { label: '站位', value: '网前，偏反手侧' },

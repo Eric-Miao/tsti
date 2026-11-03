@@ -287,14 +287,31 @@ export const ShareCard = forwardRef<
             >
               Archetype Player
             </div>
-            {type.players.map((p) => (
-              <div key={p.name} style={{ display: 'flex', alignItems: 'baseline', gap: 10 }}>
-                <span style={{ fontSize: 24, fontWeight: 700 }}>{p.name}</span>
-                <span style={{ fontSize: 13, color: '#D8EF52', letterSpacing: '0.04em' }}>
-                  {p.title}
-                </span>
-              </div>
-            ))}
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: type.players.length > 3 ? '1fr 1fr' : '1fr',
+                columnGap: 18,
+                rowGap: 9,
+              }}
+            >
+              {type.players.map((p) => (
+                <div key={p.name} style={{ minWidth: 0 }}>
+                  <div style={{ fontSize: 19, fontWeight: 700, lineHeight: 1.25 }}>{p.name}</div>
+                  <div
+                    style={{
+                      fontSize: 11.5,
+                      color: '#D8EF52',
+                      marginTop: 2,
+                      lineHeight: 1.25,
+                      letterSpacing: '0.02em',
+                    }}
+                  >
+                    {p.title}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
