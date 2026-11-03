@@ -26,6 +26,7 @@ export function Result({
   const cardRef = useRef<HTMLDivElement>(null)
   const [cardUrl, setCardUrl] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
+  const [cardError, setCardError] = useState(false)
   const [samePct, setSamePct] = useState<number | null>(null)
   const [total, setTotal] = useState<number | null>(null)
 
@@ -68,6 +69,33 @@ export function Result({
     })
   }, [code, isOwn, dims])
 
+  async function toDataUrl(url: string): Promise<string> {
+    const res = await fetch(url, { cache: 'force-cache' })
+    if (!res.ok) throw new Error(`${res.status} ${url}`)
+    const blob = await res.blob()
+    return await new Promise<string>((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onload = () => resolve(String(reader.result))
+      reader.onerror = () => reject(reader.error)
+      reader.readAsDataURL(blob)
+    })
+  }
+
+  /** 先把卡片里的图片转成 data URL，避免 html-to-image 去网络拉图时卡住 */
+  async function inlineCardImages(node: HTMLElement) {
+    const imgs = Array.from(node.querySelectorAll<HTMLImageElement>('img[data-role]'))
+    await Promise.all(
+      imgs.map(async (img) => {
+        if (!img.src || img.src.startsWith('data:')) return
+        try {
+          img.src = await toDataUrl(img.src)
+        } catch (err) {
+          console.warn('[TSTI] 图片内联失败', img.src, err)
+        }
+      }),
+    )
+  }
+
   async function makeCard() {
     if (!cardRef.current || busy) return
     setBusy(true)
@@ -81,10 +109,8 @@ export function Result({
     try {
       const { toPng } = await import('html-to-image')
       await withTimeout(document.fonts.ready, 3000)
-      const url = await withTimeout(
-        toPng(node, { pixelRatio: 1, cacheBust: false }),
-        20000,
-      )
+      await withTimeout(inlineCardImages(node), 8000)
+      const url = await withTimeout(toPng(node, { pixelRatio: 1, cacheBust: false }), 20000)
       setCardUrl(url)
     } catch (err) {
       console.error('[TSTI] 分享卡片生成失败', err)
@@ -94,6 +120,7 @@ export function Result({
         setCardUrl(url)
       } catch (err2) {
         console.error('[TSTI] 分享卡片重试也失败', err2)
+        setCardError(true)
       }
     } finally {
       setBusy(false)
@@ -271,7 +298,7 @@ export function Result({
       {/* actions */}
       <section className="mt-8 space-y-2.5">
         <button className="btn-primary" onClick={makeCard} disabled={busy}>
-          {busy ? '正在生成…' : '生成分享卡片'}
+          {busy ? '正在生成…' : cardError ? '生成失败，点一下重试' : '生成分享卡片'}
         </button>
         {isOwn ? (
           <button className="btn-ghost w-full" onClick={onStart}>
