@@ -68,7 +68,7 @@ export function Result({
 
   function makeCard() {
     setCardError(false)
-    setCardUrl(`/cards/${type.code}.png`)
+    setCardUrl(`/cards/${type.code}.jpg`)
   }
 
   async function shareCard() {

@@ -2,6 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
+import { execFileSync } from 'node:child_process'
 import { ALL_CODES, TYPES } from '../src/data/types'
 import { CardTemplate } from '../shared/CardTemplate'
 
@@ -32,8 +33,11 @@ for (const code of ALL_CODES) {
     { width: 1080, height: 1440, fonts },
   )
   const png = new Resvg(svg, { fitTo: { mode: 'width', value: 1080 } }).render().asPng()
-  fs.writeFileSync(path.join(outDir, `${code}.png`), png)
-  console.log(code, png.length)
+  const tmp = path.join(outDir, `${code}.png`)
+  fs.writeFileSync(tmp, png)
+  execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', tmp, '-q:v', '2', path.join(outDir, `${code}.jpg`)])
+  fs.unlinkSync(tmp)
+  console.log(code, fs.statSync(path.join(outDir, `${code}.jpg`)).size)
 }
 
 console.log('cards written to public/cards')
