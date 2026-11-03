@@ -5,7 +5,7 @@ import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { ALL_CODES, TYPES } from '../src/data/types'
-import { CardTemplate } from '../src/card/CardTemplate'
+import { CardTemplate } from '../shared/CardTemplate'
 import type { DimensionResult } from '../src/lib/scoring'
 
 type Font = { name: string; data: Buffer; weight: 400 | 700 }

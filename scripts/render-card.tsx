@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
 import { TYPES, ALL_CODES } from '../src/data/types'
-import { CardTemplate } from '../src/card/CardTemplate'
+import { CardTemplate } from '../shared/CardTemplate'
 import type { DimensionResult } from '../src/lib/scoring'
 
 const code = process.argv[2] ?? 'EBSA'

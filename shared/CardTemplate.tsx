@@ -1,8 +1,8 @@
 import React from 'react'
-import type { TennisType } from '../data/types'
-import { DIMENSIONS } from '../data/questions'
-import { bestPartner, nightmare } from '../lib/pairing'
-import type { DimensionResult } from '../lib/scoring'
+import type { TennisType } from '../src/data/types'
+import { DIMENSIONS } from '../src/data/questions'
+import { bestPartner, nightmare } from '../src/lib/pairing'
+import type { DimensionResult } from '../src/lib/scoring'
 
 export interface CardProps {
   type: TennisType
