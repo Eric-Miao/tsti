@@ -1,6 +1,5 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ALL_CODES, TYPES } from '../data/types'
-import { ShareCard } from '../components/ShareCard'
 import { TypeArt } from '../components/TypeArt'
 import { DimensionReadout } from '../components/DimBars'
 import { Ball } from '../components/Ball'
@@ -23,7 +22,6 @@ export function Result({
   onPickType: (code: string) => void
 }) {
   const type = TYPES[code]
-  const cardRef = useRef<HTMLDivElement>(null)
   const [cardUrl, setCardUrl] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
   const [cardError, setCardError] = useState(false)
@@ -69,59 +67,22 @@ export function Result({
     })
   }, [code, isOwn, dims])
 
-  async function toDataUrl(url: string): Promise<string> {
-    const res = await fetch(url, { cache: 'force-cache' })
-    if (!res.ok) throw new Error(`${res.status} ${url}`)
-    const blob = await res.blob()
-    return await new Promise<string>((resolve, reject) => {
-      const reader = new FileReader()
-      reader.onload = () => resolve(String(reader.result))
-      reader.onerror = () => reject(reader.error)
-      reader.readAsDataURL(blob)
-    })
-  }
-
-  /** 先把卡片里的图片转成 data URL，避免 html-to-image 去网络拉图时卡住 */
-  async function inlineCardImages(node: HTMLElement) {
-    const imgs = Array.from(node.querySelectorAll<HTMLImageElement>('img[data-role]'))
-    await Promise.all(
-      imgs.map(async (img) => {
-        if (!img.src || img.src.startsWith('data:')) return
-        try {
-          img.src = await toDataUrl(img.src)
-        } catch (err) {
-          console.warn('[TSTI] 图片内联失败', img.src, err)
-        }
-      }),
-    )
-  }
-
   async function makeCard() {
-    if (!cardRef.current || busy) return
+    if (busy) return
     setBusy(true)
-    const node = cardRef.current
-    const withTimeout = <T,>(p: Promise<T>, ms: number) =>
-      Promise.race([
-        p,
-        new Promise<T>((_, reject) => setTimeout(() => reject(new Error(`card timeout ${ms}ms`)), ms)),
-      ])
-
+    setCardError(false)
     try {
-      const { toPng } = await import('html-to-image')
-      await withTimeout(document.fonts.ready, 3000)
-      await withTimeout(inlineCardImages(node), 8000)
-      const url = await withTimeout(toPng(node, { pixelRatio: 1, cacheBust: false }), 20000)
-      setCardUrl(url)
+      const d = dimensionResults?.length
+        ? dimensionResults.map((x) => `${x.leftCount}${x.rightCount}`).join(',')
+        : '43,43,43,43'
+      const res = await fetch(`/api/card?c=${type.code}&d=${d}`)
+      if (!res.ok) throw new Error(`card api ${res.status}`)
+      const blob = await res.blob()
+      if (cardUrl) URL.revokeObjectURL(cardUrl)
+      setCardUrl(URL.createObjectURL(blob))
     } catch (err) {
       console.error('[TSTI] 分享卡片生成失败', err)
-      try {
-        const { toPng } = await import('html-to-image')
-        const url = await withTimeout(toPng(node, { pixelRatio: 1, skipFonts: true }), 20000)
-        setCardUrl(url)
-      } catch (err2) {
-        console.error('[TSTI] 分享卡片重试也失败', err2)
-        setCardError(true)
-      }
+      setCardError(true)
     } finally {
       setBusy(false)
     }
@@ -342,10 +303,6 @@ export function Result({
         </p>
       </footer>
 
-      {/* offscreen share card */}
-      <div style={{ position: 'fixed', left: -9999, top: 0, pointerEvents: 'none' }} aria-hidden>
-        <ShareCard ref={cardRef} type={type} dims={dimensionResults} />
-      </div>
 
       {cardUrl && (
         <div
