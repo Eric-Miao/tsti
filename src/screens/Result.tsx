@@ -121,7 +121,7 @@ export function Result({
       {/* hero */}
       <section className="animate-scale-in pt-5">
         <div className="border-[1.5px] border-ink">
-          <TypeArt code={type.code} className="block aspect-[4/5] w-full object-cover" />
+          <TypeArt code={type.code} className="block aspect-[2/3] w-full object-cover" />
         </div>
 
         <div className="mt-5 flex items-start justify-between gap-3">
