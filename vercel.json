@@ -4,6 +4,16 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [{ "source": "/((?!api/).*)", "destination": "/index.html" }],
+  "functions": {
+    "api/card.tsx": {
+      "includeFiles": [
+        "public/fonts/srv/**",
+        "public/types/**",
+        "public/qr-v3.png",
+        "public/resvg.wasm"
+      ]
+    }
+  },
   "headers": [
     {
       "source": "/fonts/(.*)",

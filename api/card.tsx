@@ -1,40 +1,33 @@
+import fs from 'node:fs'
+import path from 'node:path'
 import satori from 'satori'
 import { Resvg, initWasm } from '@resvg/resvg-wasm'
+import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { ALL_CODES, TYPES } from '../src/data/types'
 import { CardTemplate } from '../src/card/CardTemplate'
 import type { DimensionResult } from '../src/lib/scoring'
 
-export const config = { runtime: 'edge' }
-
-type Font = { name: string; data: ArrayBuffer; weight: 400 | 700 }
+type Font = { name: string; data: Buffer; weight: 400 | 700 }
 
 let fontCache: Font[] | null = null
 let wasmReady: Promise<void> | null = null
 
-async function loadFonts(origin: string): Promise<Font[]> {
+const file = (p: string) => fs.readFileSync(path.join(process.cwd(), p))
+
+function loadFonts(): Font[] {
   if (fontCache) return fontCache
-  const load = (path: string) => fetch(new URL(path, origin)).then((r) => r.arrayBuffer())
-  const [noto, notoBold, archivo, barlow] = await Promise.all([
-    load('/fonts/srv/noto-reg.otf'),
-    load('/fonts/srv/noto-bold.otf'),
-    load('/fonts/srv/archivo.ttf'),
-    load('/fonts/srv/barlow.ttf'),
-  ])
   fontCache = [
-    { name: 'Noto', data: noto, weight: 400 },
-    { name: 'Noto', data: notoBold, weight: 700 },
-    { name: 'Archivo', data: archivo, weight: 400 },
-    { name: 'Barlow', data: barlow, weight: 400 },
+    { name: 'Noto', data: file('public/fonts/srv/noto-reg.otf'), weight: 400 },
+    { name: 'Noto', data: file('public/fonts/srv/noto-bold.otf'), weight: 700 },
+    { name: 'Archivo', data: file('public/fonts/srv/archivo.ttf'), weight: 400 },
+    { name: 'Barlow', data: file('public/fonts/srv/barlow.ttf'), weight: 400 },
   ]
   return fontCache
 }
 
-async function loadWasm(origin: string) {
+async function loadWasm() {
   if (!wasmReady) {
-    wasmReady = (async () => {
-      const res = await fetch(new URL('/resvg.wasm', origin))
-      await initWasm(await res.arrayBuffer())
-    })()
+    wasmReady = initWasm(file('public/resvg.wasm'))
   }
   return wasmReady
 }
@@ -63,26 +56,31 @@ function parseDims(raw: string): DimensionResult[] {
   })
 }
 
-export default async function handler(req: Request) {
-  const url = new URL(req.url)
-  const code = (url.searchParams.get('c') ?? '').toUpperCase()
+export default async function handler(req: VercelRequest, res: VercelResponse) {
+  const codeParam = Array.isArray(req.query.c) ? req.query.c[0] : req.query.c
+  const code = (codeParam ?? '').toUpperCase()
   const type = TYPES[code]
-  if (!type) return new Response('unknown type', { status: 404 })
+  if (!type) {
+    res.status(404).send('unknown type')
+    return
+  }
 
   try {
-    const dims = parseDims(url.searchParams.get('d') ?? '43,43,43,43')
-    const [fonts] = await Promise.all([loadFonts(url.origin), loadWasm(url.origin)])
+    const rawDims = Array.isArray(req.query.d) ? req.query.d[0] : req.query.d
+    const dims = parseDims(rawDims ?? '43,43,43,43')
+    const fonts = loadFonts()
+    await loadWasm()
 
-    const art = new URL(`/types/${code.toLowerCase()}-v3.jpg`, url.origin).toString()
-    const qr = new URL('/qr-v3.png', url.origin).toString()
+    const artSrc = `data:image/jpeg;base64,${file(`public/types/${code.toLowerCase()}-v3.jpg`).toString('base64')}`
+    const qrSrc = `data:image/png;base64,${file('public/qr-v3.png').toString('base64')}`
 
     const svg = await satori(
       <CardTemplate
         type={type}
         dims={dims}
         index={ALL_CODES.indexOf(code) + 1}
-        artSrc={art}
-        qrSrc={qr}
+        artSrc={artSrc}
+        qrSrc={qrSrc}
         handle="@Eric-Miao"
       />,
       { width: 1080, height: 1440, fonts },
@@ -90,14 +88,11 @@ export default async function handler(req: Request) {
 
     const png = new Resvg(svg, { fitTo: { mode: 'width', value: 1080 } }).render().asPng()
 
-    return new Response(png, {
-      headers: {
-        'content-type': 'image/png',
-        'cache-control': 'public, max-age=3600, s-maxage=86400',
-      },
-    })
+    res.setHeader('content-type', 'image/png')
+    res.setHeader('cache-control', 'public, max-age=3600, s-maxage=86400')
+    res.status(200).send(Buffer.from(png))
   } catch (err) {
     console.error('[card]', err)
-    return new Response(`card error: ${(err as Error).message}`, { status: 500 })
+    res.status(500).send(`card error: ${(err as Error).message}`)
   }
 }
