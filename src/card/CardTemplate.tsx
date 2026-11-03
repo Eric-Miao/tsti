@@ -1,3 +1,4 @@
+import React from 'react'
 import type { TennisType } from '../data/types'
 import { DIMENSIONS } from '../data/questions'
 import { bestPartner, nightmare } from '../lib/pairing'

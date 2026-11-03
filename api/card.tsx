@@ -1,7 +1,8 @@
+import React from 'react'
 import fs from 'node:fs'
 import path from 'node:path'
 import satori from 'satori'
-import { Resvg, initWasm } from '@resvg/resvg-wasm'
+import { Resvg } from '@resvg/resvg-js'
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { ALL_CODES, TYPES } from '../src/data/types'
 import { CardTemplate } from '../src/card/CardTemplate'
@@ -10,7 +11,6 @@ import type { DimensionResult } from '../src/lib/scoring'
 type Font = { name: string; data: Buffer; weight: 400 | 700 }
 
 let fontCache: Font[] | null = null
-let wasmReady: Promise<void> | null = null
 
 const file = (p: string) => fs.readFileSync(path.join(process.cwd(), p))
 
@@ -23,13 +23,6 @@ function loadFonts(): Font[] {
     { name: 'Barlow', data: file('public/fonts/srv/barlow.ttf'), weight: 400 },
   ]
   return fontCache
-}
-
-async function loadWasm() {
-  if (!wasmReady) {
-    wasmReady = initWasm(file('public/resvg.wasm'))
-  }
-  return wasmReady
 }
 
 const DIMS = [
@@ -69,7 +62,6 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const rawDims = Array.isArray(req.query.d) ? req.query.d[0] : req.query.d
     const dims = parseDims(rawDims ?? '43,43,43,43')
     const fonts = loadFonts()
-    await loadWasm()
 
     const artSrc = `data:image/jpeg;base64,${file(`public/types/${code.toLowerCase()}-v3.jpg`).toString('base64')}`
     const qrSrc = `data:image/png;base64,${file('public/qr-v3.png').toString('base64')}`
