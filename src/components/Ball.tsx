@@ -14,5 +14,5 @@ export function Ball({ className = 'h-5 w-5' }: { className?: string }) {
 }
 
 export function typeArtUrl(code: string) {
-  return `/types/${code.toLowerCase()}-v2.webp`
+  return `/types/${code.toLowerCase()}-v3.jpg`
 }
