@@ -1,16 +1,11 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { SUPABASE_FALLBACK, looksLikePublicKey } from '../config'
+import { SUPABASE_FALLBACK } from '../config'
 
-const envUrl = import.meta.env.VITE_SUPABASE_URL as string | undefined
-const envKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined
-
-const url = envUrl && envUrl.includes('.supabase.co') ? envUrl : SUPABASE_FALLBACK.url
-
-// 环境变量填错（例如误填了管理令牌）时回退到内置的 anon key，避免把敏感 key 打进前端
-if (envKey && !looksLikePublicKey(envKey)) {
-  console.warn('[TSTI] VITE_SUPABASE_ANON_KEY 不是合法的公开 key，已回退到内置配置')
-}
-const anonKey = looksLikePublicKey(envKey) ? envKey! : SUPABASE_FALLBACK.anonKey
+// 不读 import.meta.env：Vite 会把环境变量内联成字面量打进 bundle，
+// 一旦有人把管理令牌填进 Vercel 的 VITE_ 变量，就会泄露到公开的 JS 里。
+// Supabase 的 anon key 本来就是公开的（RLS 兜底），直接内置更安全。
+const url = SUPABASE_FALLBACK.url
+const anonKey = SUPABASE_FALLBACK.anonKey
 
 export const supabaseEnabled = Boolean(url && anonKey)
 
@@ -21,7 +16,7 @@ function getClient(): Promise<SupabaseClient | null> {
   if (!supabaseEnabled) return Promise.resolve(null)
   if (!clientPromise) {
     clientPromise = import('@supabase/supabase-js').then(({ createClient }) =>
-      createClient(url!, anonKey!),
+      createClient(url, anonKey),
     )
   }
   return clientPromise
