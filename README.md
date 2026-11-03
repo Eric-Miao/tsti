@@ -16,9 +16,9 @@ Tennis Style Type Indicator —— 28 道题，4 个维度，16 种网球人格�
 ## 技术栈
 
 - Vite + React 19 + TypeScript + Tailwind CSS v4
-- 纯前端，无后端依赖；结果通过 URL `#/r/EBSA?d=61,70,52,43` 可直接分享
+- 结果通过 URL `#/r/EBSA?d=61,70,52,43` 可直接分享
 - 分享卡片用 `html-to-image` 在浏览器端生成 1080×1440 PNG
-- 统计（可选）用 Supabase：匿名只写不读，只暴露聚合结果
+- 统计（可选）用 Supabase，通过 `/api` 的 Edge Function 访问，凭据不进入浏览器
 
 ## 本地开发
 
@@ -34,15 +34,17 @@ npm run dev
 复制 `.env.example` 为 `.env`：
 
 ```
-VITE_SUPABASE_URL=https://YOUR-PROJECT.supabase.co
-VITE_SUPABASE_ANON_KEY=
+SUPABASE_URL=https://YOUR-PROJECT.supabase.co
+SUPABASE_ANON_KEY=
 ```
 
-只放**公开 key**（anon key `eyJ...` 或 publishable key `sb_publishable_...`）。这些值会被打进前端 bundle，靠 RLS 兜底，本来就是公开的。
+这两个变量只在服务端（`api/` 下的 Edge Function）读取，不带 `VITE_` 前缀，因此不会被打进前端 bundle，Vercel 也不会报 public prefix 警告。
 
-不要放管理令牌（`sbp_...`）或 service_role / secret key。`vite.config.ts` 会在构建期直接报错拦下来。
+浏览器只请求同源的 `/api/stats` 和 `/api/record`，前端代码里没有任何 Supabase 凭据。
 
-不填也能跑，只是页面里不显示「已有 N 人测过」「X% 同型」这些统计。
+不填也能跑，只是页面里不显示「已有 N 人测过」这些统计。
+
+> 本地 `npm run dev` 不启动 `/api` 函数，统计会静默关闭。要本地联调统计，用 `vercel dev`，或者直接看 Preview 部署。
 
 ## Supabase 配置
 
@@ -50,7 +52,7 @@ VITE_SUPABASE_ANON_KEY=
 2. 执行 `supabase/schema.sql`
 3. 把 Project URL 和 anon public key 填进 `.env`
 
-表结构：`tsti_results`（每台设备一条，靠 `client_id` 去重）。RLS 只允许 anon 写入和更新，读取只能通过 `tsti_stats()` 这个聚合函数。
+表结构：`tsti_results`（每台设备一条，靠 `client_id` 去重）。表不直接对 anon 开放，只暴露两个函数：`tsti_stats()` 返回聚合结果，`tsti_record()` 写入自己那条。
 
 ## 构建与部署
 
@@ -75,9 +77,12 @@ src/
   data/types.ts        16 型完整文案（画像/优劣势/装备/双打/训练）
   lib/scoring.ts       计分与四维偏好强度
   lib/storage.ts       答题断点续存
-  lib/supabase.ts      结果上报 + 聚合统计
+  lib/stats.ts         调用 /api/stats 与 /api/record
   screens/             Landing / Quiz / Result
   components/          ShareCard / TypeArt / DimBars
+api/
+  stats.ts             聚合统计（Edge Function）
+  record.ts            结果写入（Edge Function）
 public/
   types/*.webp         16 张 1970s 丝网印刷风插图
   fonts/*.woff2        自托管字体（分享卡片需要同源字体才能嵌入）
