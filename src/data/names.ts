@@ -14,37 +14,37 @@ export interface TypeName {
 
 export const TYPE_NAMES: Record<string, TypeName> = {
   EBSA: {
-    name: '底线机关枪',
+    name: '机关枪',
     en: 'The Baseline Machine Gun',
     tagline: '「再打一板」，是你这场最常说的话。',
   },
   EBSD: {
-    name: '底线永动机',
+    name: '永动机',
     en: 'The Human Metronome',
     tagline: '别人第三盘开始喘，你才开始热身。',
   },
   EBFA: {
-    name: '底线重炮',
+    name: '重炮',
     en: 'The Flatline Cannon',
     tagline: '你从不打过渡球。打丢了也认。',
   },
   EBFD: {
-    name: '底线人墙',
+    name: '人墙',
     en: 'The Wall That Cheers',
     tagline: '救球救出集锦，观众比对手先站起来。',
   },
   ENSA: {
-    name: '网前轰炸机',
+    name: '轰炸机',
     en: 'The Net Raider',
     tagline: '你上网的速度，比他抬头的速度快。',
   },
   ENSD: {
-    name: '网前钓鱼佬',
+    name: '钓鱼佬',
     en: 'The Drop-Shot Angler',
     tagline: '你放的小球，落点离网不到一米。',
   },
   ENFA: {
-    name: '网前刽子手',
+    name: '刽子手',
     en: 'The Net Executioner',
     tagline: '你往前压那一下，对面会退半步。',
   },
@@ -54,7 +54,7 @@ export const TYPE_NAMES: Record<string, TypeName> = {
     tagline: '双打里没人记得你的名字，只记得打不穿你。',
   },
   IBSA: {
-    name: '底线闷炮',
+    name: '闷炮',
     en: 'The Quiet Howitzer',
     tagline: '你赢球的样子，像刚下班。',
   },
@@ -64,27 +64,27 @@ export const TYPE_NAMES: Record<string, TypeName> = {
     tagline: '打完两个小时，他还是不知道你累不累。',
   },
   IBFA: {
-    name: '底线冷面重炮',
+    name: '冷面重炮',
     en: 'The Ice Cannon',
     tagline: '第一盘 4-0 的时候，你脸上什么也没有。',
   },
   IBFD: {
-    name: '底线扫地僧',
+    name: '扫地僧',
     en: 'The Baseline Monk',
     tagline: '你打球像在还房贷，一期一期，绝不逾期。',
   },
   INSA: {
-    name: '网前暗器',
+    name: '暗器',
     en: 'The Quiet Blade',
     tagline: '你想上网这件事，对手总是最后一个知道。',
   },
   INSD: {
-    name: '网前门神',
+    name: '门神',
     en: 'The Net Magician',
     tagline: '你每一拍都在问他：你现在站哪？',
   },
   INFA: {
-    name: '网前冷面刺客',
+    name: '冷面刺客',
     en: 'The Cold Assassin',
     tagline: '你不多跑一步，也不少打一板。',
   },
