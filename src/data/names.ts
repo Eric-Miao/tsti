@@ -64,8 +64,8 @@ export const TYPE_NAMES: Record<string, TypeName> = {
     tagline: '打完两个小时，他还是不知道你累不累。',
   },
   IBFA: {
-    name: '冷面重炮',
-    en: 'The Ice Cannon',
+    name: '狙击手',
+    en: 'The Sniper',
     tagline: '第一盘 4-0 的时候，你脸上什么也没有。',
   },
   IBFD: {
