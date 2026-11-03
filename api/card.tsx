@@ -1,13 +1,17 @@
-import { ImageResponse } from '@vercel/og'
+import satori from 'satori'
+import { Resvg, initWasm } from '@resvg/resvg-wasm'
 import { ALL_CODES, TYPES } from '../src/data/types'
 import { CardTemplate } from '../src/card/CardTemplate'
 import type { DimensionResult } from '../src/lib/scoring'
 
 export const config = { runtime: 'edge' }
 
-let fontCache: { name: string; data: ArrayBuffer; weight: 400 | 700 }[] | null = null
+type Font = { name: string; data: ArrayBuffer; weight: 400 | 700 }
 
-async function loadFonts(origin: string) {
+let fontCache: Font[] | null = null
+let wasmReady: Promise<void> | null = null
+
+async function loadFonts(origin: string): Promise<Font[]> {
   if (fontCache) return fontCache
   const load = (path: string) => fetch(new URL(path, origin)).then((r) => r.arrayBuffer())
   const [noto, notoBold, archivo, barlow] = await Promise.all([
@@ -23,6 +27,16 @@ async function loadFonts(origin: string) {
     { name: 'Barlow', data: barlow, weight: 400 },
   ]
   return fontCache
+}
+
+async function loadWasm(origin: string) {
+  if (!wasmReady) {
+    wasmReady = (async () => {
+      const res = await fetch(new URL('/resvg.wasm', origin))
+      await initWasm(await res.arrayBuffer())
+    })()
+  }
+  return wasmReady
 }
 
 const DIMS = [
@@ -55,14 +69,14 @@ export default async function handler(req: Request) {
   const type = TYPES[code]
   if (!type) return new Response('unknown type', { status: 404 })
 
-  const dims = parseDims(url.searchParams.get('d') ?? '43,43,43,43')
-  const fonts = await loadFonts(url.origin)
+  try {
+    const dims = parseDims(url.searchParams.get('d') ?? '43,43,43,43')
+    const [fonts] = await Promise.all([loadFonts(url.origin), loadWasm(url.origin)])
 
-  const art = new URL(`/types/${code.toLowerCase()}-v3.jpg`, url.origin).toString()
-  const qr = new URL('/qr-v3.png', url.origin).toString()
+    const art = new URL(`/types/${code.toLowerCase()}-v3.jpg`, url.origin).toString()
+    const qr = new URL('/qr-v3.png', url.origin).toString()
 
-  return new ImageResponse(
-    (
+    const svg = await satori(
       <CardTemplate
         type={type}
         dims={dims}
@@ -70,15 +84,20 @@ export default async function handler(req: Request) {
         artSrc={art}
         qrSrc={qr}
         handle="@Eric-Miao"
-      />
-    ),
-    {
-      width: 1080,
-      height: 1440,
-      fonts,
+      />,
+      { width: 1080, height: 1440, fonts },
+    )
+
+    const png = new Resvg(svg, { fitTo: { mode: 'width', value: 1080 } }).render().asPng()
+
+    return new Response(png, {
       headers: {
+        'content-type': 'image/png',
         'cache-control': 'public, max-age=3600, s-maxage=86400',
       },
-    },
-  )
+    })
+  } catch (err) {
+    console.error('[card]', err)
+    return new Response(`card error: ${(err as Error).message}`, { status: 500 })
+  }
 }
