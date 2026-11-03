@@ -94,7 +94,7 @@ const PROFILES: Record<string, TypeProfile> = {
     summary:
       '你的字典里没有过渡球。每一板都当最后一板打，平击、低平、穿透。进的时候球场会安静一秒，失误的时候你自己先喊出来。',
     players: [
-      { name: '胡安·马丁·德尔波特罗', title: '2009 美网冠军', note: '那届连胜纳达尔和费德勒，正手一板过' },
+      { name: '胡安·马丁·德尔波特罗', title: '大菠萝', note: '那届连胜纳达尔和费德勒，正手一板过' },
       { name: '阿丽娜·萨巴伦卡', title: '世界第一', note: '发球和正手都用同一个音量' },
     ],
     profile: [
@@ -123,7 +123,7 @@ const PROFILES: Record<string, TypeProfile> = {
       '你是表演型防守。别人以为你在挨打，其实你在等他累。那些几乎救不到的球你能救回来，还顺手做个动作。观众喜欢你，对面恨你。',
     players: [
       { name: '加埃尔·孟菲尔斯', title: '两次大满贯四强', note: '跑动范围出了名的不讲道理' },
-      { name: '卡罗琳·沃兹尼亚奇', title: '2018 澳网冠军', note: '把防守打成一套完整战术的人' },
+      { name: '卡罗琳·沃兹尼亚奇', title: '丹麦甜心', note: '把防守打成一套完整战术的人' },
     ],
     profile: [
       { label: '站位', value: '底线后很远，经常跑出转播画面' },
@@ -151,7 +151,7 @@ const PROFILES: Record<string, TypeProfile> = {
       '你把网前当终点线。发球上网、接发上网、相持里突然上网。截击不是挡过去，是带着旋往下砸。你打球的样子像在往前扑。',
     players: [
       { name: '帕特·拉夫特', title: '两届美网冠军', note: '发球上网配一手带旋的截击' },
-      { name: '玛蒂娜·纳芙拉蒂洛娃', title: '18 座大满贯', note: '把网前变成主场的第一人' },
+      { name: '玛蒂娜·纳芙拉蒂洛娃', title: '女金刚', note: '把网前变成主场的第一人' },
     ],
     quote: {
       text: "Whoever said, 'It's not whether you win or lose that counts,' probably lost.",
@@ -210,7 +210,7 @@ const PROFILES: Record<string, TypeProfile> = {
     summary:
       '你的网球只有两个区域：网前，和正在去网前的路上。发球上网、截击、扑上去，动作大、声音大、决心大。你上网那一下，对手会下意识往后退半步。',
     players: [
-      { name: '鲍里斯·贝克尔', title: '6 座大满贯', note: '17 岁拿温网，鱼跃截击是他的标志' },
+      { name: '鲍里斯·贝克尔', title: 'Boom Boom', note: '17 岁拿温网，鱼跃截击是他的标志' },
       { name: '维纳斯·威廉姆斯', title: '7 座大满贯', note: '发球之后第一拍就往网前压' },
     ],
     profile: [
@@ -295,7 +295,7 @@ const PROFILES: Record<string, TypeProfile> = {
       '你不喊、不笑、不解释。你只是把球回到一个让你难受的位置，然后再来一次。对手打到第二盘会开始想：这个人到底会不会累？',
     players: [
       { name: '诺瓦克·德约科维奇', title: '三巨头', note: '接发、防守、反击，全都不动声色' },
-      { name: '克里斯·埃弗特', title: '18 座大满贯', note: '连续十三年每年至少一个大满贯' },
+      { name: '克里斯·埃弗特', title: '冰公主', note: '连续十三年每年至少一个大满贯' },
     ],
     profile: [
       { label: '站位', value: '底线内半步，接发站得很靠前' },
@@ -380,7 +380,7 @@ const PROFILES: Record<string, TypeProfile> = {
       '你上网的时候没有声音，也没有预兆。kick serve 把对手顶起来，第二拍你已经站在网前了。截击不追求力量，追求角度。你更愿意让对手跑，而不是让对手怕。',
     players: [
       { name: '斯蒂芬·埃德伯格', title: '6 座大满贯', note: '发球上网配优雅截击，安静地结束比赛' },
-      { name: '玛蒂娜·辛吉斯', title: '5 座大满贯', note: '16 岁登顶世界第一，网前手感极细' },
+      { name: '玛蒂娜·辛吉斯', title: '瑞士公主', note: '16 岁登顶世界第一，网前手感极细' },
     ],
     profile: [
       { label: '站位', value: '发球线内' },
@@ -407,7 +407,7 @@ const PROFILES: Record<string, TypeProfile> = {
     summary:
       '你是那种让对手打完说"难受"的人。切削、放短、挑高、突然上网，你用最小的力量制造最大的麻烦。你从不着急，因为着急的总是对面。',
     players: [
-      { name: '法布里斯·桑托罗', title: '职业赛场 21 年', note: '外号魔术师，正反手两种握拍' },
+      { name: '法布里斯·桑托罗', title: '魔术师', note: '正反手两种握拍，职业赛场打了 21 年' },
       { name: '阿什莉·巴蒂', title: '3 座大满贯', note: '切削加网前，安静地把对手拆掉' },
     ],
     profile: [
