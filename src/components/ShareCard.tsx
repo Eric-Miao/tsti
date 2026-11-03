@@ -316,7 +316,7 @@ export const ShareCard = forwardRef<
 
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: 12 }}>
             <div style={{ background: '#F5EFE3', padding: 10, lineHeight: 0 }}>
-              <img src="/qr.svg" alt="" width={120} height={120} style={{ display: 'block' }} />
+              <img src="/qr-v2.svg" alt="" width={120} height={120} style={{ display: 'block' }} />
             </div>
             <div style={{ fontSize: 15, lineHeight: 1.5, color: 'rgba(245,239,227,0.75)' }}>
               扫码
