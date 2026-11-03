@@ -24,12 +24,12 @@ export const TYPE_NAMES: Record<string, TypeName> = {
     tagline: '别人第三盘开始喘，你才开始热身。',
   },
   EBFA: {
-    name: '底线重炮手',
+    name: '底线重炮',
     en: 'The Flatline Cannon',
     tagline: '你从不打过渡球。打丢了也认。',
   },
   EBFD: {
-    name: '底线人形墙',
+    name: '底线人墙',
     en: 'The Wall That Cheers',
     tagline: '救球救出集锦，观众比对手先站起来。',
   },
@@ -59,7 +59,7 @@ export const TYPE_NAMES: Record<string, TypeName> = {
     tagline: '你赢球的样子，像刚下班。',
   },
   IBSD: {
-    name: '底线沉默大魔王',
+    name: '大魔王',
     en: 'The Silent Overlord',
     tagline: '打完两个小时，他还是不知道你累不累。',
   },
@@ -89,7 +89,7 @@ export const TYPE_NAMES: Record<string, TypeName> = {
     tagline: '你不多跑一步，也不少打一板。',
   },
   INFD: {
-    name: '网前静默铁闸',
+    name: '铁闸',
     en: 'The Silent Gate',
     tagline: '比分到 6-2，对面才发现你一直在那儿。',
   },
