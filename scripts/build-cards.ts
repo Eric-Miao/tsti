@@ -28,7 +28,6 @@ for (const code of ALL_CODES) {
       index: ALL_CODES.indexOf(code) + 1,
       artSrc: b64(`public/types/${code.toLowerCase()}-v3.jpg`, 'image/jpeg'),
       qrSrc: b64('public/qr-v4.png', 'image/png'),
-      handle: '@Eric-Miao',
     }) as any,
     { width: 1080, height: 1920, fonts },
   )

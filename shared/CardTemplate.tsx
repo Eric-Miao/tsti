@@ -6,7 +6,6 @@ export interface CardProps {
   index: number
   artSrc: string
   qrSrc: string
-  handle: string
 }
 
 const C = {
@@ -34,7 +33,7 @@ const IMAGE_H = 1240
 const CREAM_H = 410
 const FOOTER_H = 270
 
-export function CardTemplate({ type, index, artSrc, qrSrc, handle }: CardProps) {
+export function CardTemplate({ type, index, artSrc, qrSrc }: CardProps) {
   const bg = blockColor(type.code)
 
   return (
@@ -190,29 +189,18 @@ export function CardTemplate({ type, index, artSrc, qrSrc, handle }: CardProps) 
         <div
           style={{
             display: 'flex',
-            flexDirection: 'column',
             alignItems: 'flex-end',
-            justifyContent: 'space-between',
-            height: FOOTER_H,
             marginLeft: 'auto',
+            paddingBottom: 16,
+            fontFamily: 'Barlow',
+            fontSize: 18,
+            letterSpacing: 1,
+            color: 'rgba(255,255,255,0.85)',
           }}
         >
-          <div style={{ display: 'flex', fontSize: 20, fontWeight: 700, marginTop: 30 }}>
-            第 {String(index).padStart(2, '0')} / 16 型
-          </div>
-          <div
-            style={{
-              display: 'flex',
-              fontFamily: 'Barlow',
-              fontSize: 16,
-              letterSpacing: 1,
-              color: 'rgba(255,255,255,0.75)',
-              marginBottom: 16,
-            }}
-          >
-            {handle}
-          </div>
+          第 {String(index).padStart(2, '0')} / 16 型
         </div>
+
 
         </div>
       </div>

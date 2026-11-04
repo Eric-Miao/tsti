@@ -38,7 +38,6 @@ const element = CardTemplate({
   index: ALL_CODES.indexOf(code) + 1,
   artSrc: b64(`public/types/${code.toLowerCase()}-v3.jpg`, 'image/jpeg'),
   qrSrc: b64('public/qr-v3.png', 'image/png'),
-  handle: '@Eric-Miao',
 })
 
 const svg = await satori(element as any, { width: 1080, height: 1920, fonts })
