@@ -71,10 +71,9 @@ export function CardTemplate({ type, index, artSrc, qrSrc, handle }: CardProps) 
           height: CREAM_H,
           flexShrink: 0,
           display: 'flex',
-          paddingTop: 32,
         }}
       >
-        <div style={{ display: 'flex', width: 952, marginLeft: 64 }}>
+        <div style={{ display: 'flex', width: 952, marginLeft: 64, marginTop: 32 }}>
         <div style={{ display: 'flex', flexDirection: 'column', width: 600 }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <div
@@ -158,7 +157,7 @@ export function CardTemplate({ type, index, artSrc, qrSrc, handle }: CardProps) 
               textAlign: 'center',
             }}
           >
-            扫码或访问 tsti.site
+            扫码，测出你的网球人格
           </div>
         </div>
         </div>
@@ -173,11 +172,11 @@ export function CardTemplate({ type, index, artSrc, qrSrc, handle }: CardProps) 
           background: bg,
           color: '#FFFFFF',
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'stretch',
         }}
       >
         <div style={{ display: 'flex', width: 952, marginLeft: 64 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', width: 700 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', width: 700, justifyContent: 'center' }}>
           {type.players.slice(0, 2).map((p) => (
             <div key={p.name} style={{ display: 'flex', alignItems: 'baseline', marginBottom: 6 }}>
               <div style={{ fontSize: 26, fontWeight: 700 }}>{p.name}</div>
@@ -193,14 +192,28 @@ export function CardTemplate({ type, index, artSrc, qrSrc, handle }: CardProps) 
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-end',
+            justifyContent: 'space-between',
+            height: FOOTER_H,
             marginLeft: 'auto',
           }}
         >
-          <div style={{ fontSize: 20, fontWeight: 700 }}>第 {String(index).padStart(2, '0')} / 16 型</div>
-          <div style={{ fontFamily: 'Barlow', fontSize: 17, marginTop: 6, color: 'rgba(255,255,255,0.85)' }}>
+          <div style={{ display: 'flex', fontSize: 20, fontWeight: 700, marginTop: 30 }}>
+            第 {String(index).padStart(2, '0')} / 16 型
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              fontFamily: 'Barlow',
+              fontSize: 16,
+              letterSpacing: 1,
+              color: 'rgba(255,255,255,0.75)',
+              marginBottom: 16,
+            }}
+          >
             {handle}
           </div>
         </div>
+
         </div>
       </div>
     </div>
