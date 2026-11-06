@@ -1,8 +1,11 @@
-import { DIMENSIONS } from '../data/questions'
+import { getDimensions } from '../data'
 import type { DimensionResult } from '../lib/scoring'
+import { useLocale } from '../i18n'
 
 export function DimensionReadout({ dim }: { dim: DimensionResult }) {
-  const meta = DIMENSIONS[dim.dim]
+  const { locale } = useLocale()
+  const dims = getDimensions(locale)
+  const meta = dims[dim.dim]
   const leftPct = Math.round((dim.leftCount / (dim.leftCount + dim.rightCount || 1)) * 100)
   const leftWins = dim.winner === dim.left
 
@@ -27,10 +30,7 @@ export function DimensionReadout({ dim }: { dim: DimensionResult }) {
       </div>
 
       <div className="relative h-[7px] w-full bg-paper-3">
-        <div
-          className="absolute inset-y-0 left-0 bg-green"
-          style={{ width: `${leftPct}%` }}
-        />
+        <div className="absolute inset-y-0 left-0 bg-green" style={{ width: `${leftPct}%` }} />
         <div className="absolute inset-y-0 left-1/2 w-px bg-ink/40" />
       </div>
 
@@ -48,9 +48,12 @@ export function DimensionReadout({ dim }: { dim: DimensionResult }) {
 }
 
 export function DimensionLegend() {
+  const { locale } = useLocale()
+  const dims = getDimensions(locale)
+
   return (
     <div className="grid grid-cols-2 gap-px bg-ink/15">
-      {Object.entries(DIMENSIONS).map(([key, d]) => (
+      {Object.entries(dims).map(([key, d]) => (
         <div key={key} className="bg-paper p-3.5">
           <div className="label mb-1.5 text-[0.6rem]">{d.name}</div>
           <div className="flex items-center gap-1.5">

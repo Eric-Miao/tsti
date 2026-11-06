@@ -1,7 +1,10 @@
 import React from 'react'
 import type { TennisType } from '../src/data/types'
+import { getDimensions } from '../src/data'
+import type { Locale } from '../src/i18n'
 
 export interface CardProps {
+  locale?: Locale
   type: TennisType
   index: number
   artSrc: string
@@ -29,12 +32,17 @@ const FOCUS: Record<string, { z: number; f: number }> = {
   INFD: { z: 1.18, f: 0.1 },
 }
 
-const IMAGE_H = 1240
-const CREAM_H = 410
-const FOOTER_H = 270
+const IMAGE_ZH = 1240
+const IMAGE_EN = 1240
+const FOOTER_ZONE = 270
 
-export function CardTemplate({ type, index, artSrc, qrSrc }: CardProps) {
+export function CardTemplate({ type, index, artSrc, qrSrc, locale = 'zh' }: CardProps) {
   const bg = blockColor(type.code)
+  const dims = getDimensions(locale)
+  const IMAGE_H = locale === 'en' ? IMAGE_EN : IMAGE_ZH
+  const CREAM_H = 1920 - IMAGE_H - FOOTER_ZONE
+  const nameSize = locale === 'en' ? 42 : 58
+  const taglineSize = locale === 'en' ? 21 : 25
 
   return (
     <div
@@ -83,7 +91,9 @@ export function CardTemplate({ type, index, artSrc, qrSrc }: CardProps) {
                 padding: '8px 16px',
               }}
             >
-              <div style={{ fontSize: 26, fontWeight: 700, color: C.green }}>网球人格测试</div>
+              <div style={{ fontSize: locale === 'en' ? 20 : 26, fontWeight: 700, color: C.green, letterSpacing: locale === 'en' ? 1 : 0 }}>
+              {locale === 'en' ? 'TENNIS PERSONALITY TEST' : '网球人格测试'}
+            </div>
             </div>
             <div
               style={{
@@ -111,14 +121,14 @@ export function CardTemplate({ type, index, artSrc, qrSrc }: CardProps) {
             {type.code}
           </div>
 
-          <div style={{ fontSize: 58, fontWeight: 700, lineHeight: 1.15, marginTop: 4 }}>
+          <div style={{ fontSize: nameSize, fontWeight: 700, lineHeight: 1.12, marginTop: 4 }}>
             {type.name}
           </div>
 
           <div
             style={{
-              fontSize: 25,
-              lineHeight: 1.5,
+              fontSize: taglineSize,
+              lineHeight: 1.45,
               marginTop: 12,
               color: '#3A4A40',
               width: 600,
@@ -156,7 +166,7 @@ export function CardTemplate({ type, index, artSrc, qrSrc }: CardProps) {
               textAlign: 'center',
             }}
           >
-            扫码，测出你的网球人格
+            {locale === 'en' ? 'Scan to find your type' : '扫码，测出你的网球人格'}
           </div>
         </div>
         </div>
@@ -166,7 +176,7 @@ export function CardTemplate({ type, index, artSrc, qrSrc }: CardProps) {
       <div
         style={{
           width: 1080,
-          height: FOOTER_H,
+          height: 270,
           flexShrink: 0,
           background: bg,
           color: '#FFFFFF',
@@ -198,7 +208,7 @@ export function CardTemplate({ type, index, artSrc, qrSrc }: CardProps) {
             color: 'rgba(255,255,255,0.85)',
           }}
         >
-          第 {String(index).padStart(2, '0')} / 16 型
+          {locale === 'en' ? `No. ${String(index).padStart(2, '0')} / 16` : `第 ${String(index).padStart(2, '0')} / 16 型`}
         </div>
 
 

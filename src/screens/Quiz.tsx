@@ -1,8 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { QUESTIONS, type Pole } from '../data/questions'
+import type { Pole } from '../data/questions'
+import { getQuestions } from '../data'
+import { useLocale } from '../i18n'
+import { UI } from '../i18n/ui'
 import { answeredCount, isComplete, type TstiResult } from '../lib/scoring'
-
-const ORDER = [...QUESTIONS].sort((a, b) => ((a.id * 7919) % 101) - ((b.id * 7919) % 101))
 
 export function Quiz({
   answers,
@@ -17,6 +18,14 @@ export function Quiz({
   onExit: () => void
   onRestart: () => void
 }) {
+  const { locale } = useLocale()
+  const t = UI.quiz
+  const questions = useMemo(() => getQuestions(locale), [locale])
+  const ORDER = useMemo(
+    () => [...questions].sort((a, b) => ((a.id * 7919) % 101) - ((b.id * 7919) % 101)),
+    [questions],
+  )
+
   const firstUnanswered = useMemo(() => {
     const idx = ORDER.findIndex((q) => !answers[q.id])
     return idx === -1 ? 0 : idx
@@ -78,7 +87,7 @@ export function Quiz({
           onClick={() => (index === 0 ? onExit() : setIndex((i) => i - 1))}
           className="font-cond text-sm tracking-[0.14em] text-ink-soft uppercase transition-colors hover:text-ink"
         >
-          ← 上一步
+          {t.back[locale]}
         </button>
         <span className="font-cond text-sm font-bold tracking-[0.16em]">
           {String(index + 1).padStart(2, '0')}
@@ -110,10 +119,10 @@ export function Quiz({
 
         <div className="mt-8 flex items-center justify-between">
           <p className="text-[0.7rem] leading-relaxed text-ink-soft/70">
-            凭第一反应选，别想“应该”怎么打。
+            {t.hint[locale]}
           </p>
           <button onClick={onRestart} className="label text-[0.6rem] underline decoration-ink/30 underline-offset-4">
-            重新开始
+            {t.restart[locale]}
           </button>
         </div>
       </div>

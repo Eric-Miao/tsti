@@ -1,4 +1,4 @@
-import { QUESTIONS, type Pole, type Dim } from '../data/questions'
+import { QUESTIONS, type Pole, type Dim, type Question } from '../data/questions'
 
 export type Scores = Record<Pole, number>
 
@@ -27,10 +27,10 @@ const PAIRS: { dim: Dim; left: Pole; right: Pole }[] = [
   { dim: 'AD', left: 'A', right: 'D' },
 ]
 
-export function score(answers: Record<number, Pole>): TstiResult {
+export function score(answers: Record<number, Pole>, questions: Question[] = QUESTIONS): TstiResult {
   const scores: Scores = { ...EMPTY }
 
-  for (const q of QUESTIONS) {
+  for (const q of questions) {
     const pole = answers[q.id]
     if (pole) scores[pole] += 1
   }
@@ -47,10 +47,10 @@ export function score(answers: Record<number, Pole>): TstiResult {
   return { code: dims.map((d) => d.winner).join(''), scores, dims }
 }
 
-export function isComplete(answers: Record<number, Pole>): boolean {
-  return QUESTIONS.every((q) => Boolean(answers[q.id]))
+export function isComplete(answers: Record<number, Pole>, questions: Question[] = QUESTIONS): boolean {
+  return questions.every((q) => Boolean(answers[q.id]))
 }
 
-export function answeredCount(answers: Record<number, Pole>): number {
-  return QUESTIONS.filter((q) => Boolean(answers[q.id])).length
+export function answeredCount(answers: Record<number, Pole>, questions: Question[] = QUESTIONS): number {
+  return questions.filter((q) => Boolean(answers[q.id])).length
 }

@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { ALL_CODES, TYPES } from '../data/types'
+import { ALL_CODES, getTypes } from '../data'
+import { useLocale } from '../i18n'
+import { UI } from '../i18n/ui'
 import { TypeArt } from '../components/TypeArt'
 import { DimensionReadout } from '../components/DimBars'
 import { Ball } from '../components/Ball'
@@ -21,6 +23,9 @@ export function Result({
   onHome: () => void
   onPickType: (code: string) => void
 }) {
+  const { locale, toggle } = useLocale()
+  const t = UI.result
+  const TYPES = getTypes(locale)
   const type = TYPES[code]
   const [cardUrl, setCardUrl] = useState<string | null>(null)
   const [cardError, setCardError] = useState(false)
@@ -68,7 +73,7 @@ export function Result({
 
   function makeCard() {
     setCardError(false)
-    setCardUrl(`/cards/${type.code}.jpg`)
+    setCardUrl(`/cards/${locale === 'en' ? 'en/' : ''}${type.code}.jpg`)
   }
 
   async function shareCard() {
@@ -96,9 +101,18 @@ export function Result({
           <Ball className="h-[17px] w-[17px] text-ball" />
           <span className="font-display text-[1rem] tracking-[0.08em]">TSTI</span>
         </button>
-        <span className="label text-[0.58rem]">
-          {isOwn ? '你的结果' : '类型档案'}
-        </span>
+        <div className="flex items-center gap-2">
+          <span className="label text-[0.58rem]">
+            {isOwn ? t.yourResult[locale] : t.typeFile[locale]}
+          </span>
+          <button
+            onClick={toggle}
+            className="label border-[1.5px] border-ink/30 px-2 py-0.5 text-[0.55rem] transition-colors hover:border-ink"
+            aria-label="Switch language"
+          >
+            {UI.nav.langLabel[locale]}
+          </button>
+        </div>
       </header>
 
       {/* hero */}
@@ -120,7 +134,7 @@ export function Result({
           {samePct !== null && (
             <div className="shrink-0 border-[1.5px] border-ink px-2.5 py-1.5 text-center">
               <div className="font-display text-lg leading-none text-clay">{samePct}%</div>
-              <div className="mt-1 text-[0.55rem] leading-none text-ink-soft">同型</div>
+              <div className="mt-1 text-[0.55rem] leading-none text-ink-soft">{t.sameType[locale]}</div>
             </div>
           )}
         </div>
@@ -133,7 +147,7 @@ export function Result({
       {/* dimensions */}
       {dimensionResults && (
         <section className="mt-8">
-          <SectionTitle label="四维读数" en="Your Axes" />
+          <SectionTitle label={t.axes[locale]} en="Your Axes" />
           <div className="divide-y divide-ink/10">
             {dimensionResults.map((d) => (
               <DimensionReadout key={d.dim} dim={d} />
@@ -145,7 +159,7 @@ export function Result({
       {/* archetype */}
       <section className="mt-8 border-[1.5px] border-ink bg-green text-paper">
         <div className="border-b border-paper/20 px-5 py-3">
-          <div className="label text-[0.56rem] !text-paper/60">原型球员</div>
+          <div className="label text-[0.56rem] !text-paper/60">{t.archetype[locale]}</div>
         </div>
         {type.players.map((p) => (
           <div key={p.name} className="border-b border-paper/20 px-5 py-4 last:border-b-0">
@@ -168,7 +182,7 @@ export function Result({
 
       {/* summary */}
       <section className="mt-8">
-        <SectionTitle label="球场画像" en="On Court" />
+        <SectionTitle label={t.onCourt[locale]} en="On Court" />
         <p className="text-[0.95rem] leading-[1.85] text-ink-soft">{type.summary}</p>
 
         <div className="mt-5 grid grid-cols-2 gap-px bg-ink/15">
@@ -183,12 +197,12 @@ export function Result({
 
       {/* strengths / weaknesses */}
       <section className="mt-8">
-        <SectionTitle label="优势与痛点" en="Pros & Cons" />
+        <SectionTitle label={t.prosCons[locale]} en="Pros & Cons" />
         <div className="grid gap-2.5">
           <div className="border-[1.5px] border-ink p-4">
             <div className="mb-2 flex items-center gap-2">
               <span className="h-2 w-2 bg-green" />
-              <span className="font-cond text-sm font-bold tracking-[0.18em] uppercase">你的武器</span>
+              <span className="font-cond text-sm font-bold tracking-[0.18em] uppercase">{t.weapons[locale]}</span>
             </div>
             <ul className="space-y-1.5">
               {type.strengths.map((s) => (
@@ -202,7 +216,7 @@ export function Result({
           <div className="border-[1.5px] border-ink p-4">
             <div className="mb-2 flex items-center gap-2">
               <span className="h-2 w-2 bg-clay" />
-              <span className="font-cond text-sm font-bold tracking-[0.18em] uppercase">你的痛点</span>
+              <span className="font-cond text-sm font-bold tracking-[0.18em] uppercase">{t.weakSpots[locale]}</span>
             </div>
             <ul className="space-y-1.5">
               {type.weaknesses.map((s) => (
@@ -218,7 +232,7 @@ export function Result({
 
       {/* gear */}
       <section className="mt-8">
-        <SectionTitle label="装备偏好" en="Setup" />
+        <SectionTitle label={t.setup[locale]} en="Setup" />
         <div className="divide-y divide-ink/10 border-y-[1.5px] border-ink">
           {type.gear.map((g) => (
             <div key={g.label} className="flex items-baseline justify-between gap-4 py-2.5">
@@ -231,39 +245,39 @@ export function Result({
 
       {/* doubles */}
       <section className="mt-8">
-        <SectionTitle label="双打定位" en="Doubles" />
+        <SectionTitle label={t.doubles[locale]} en="Doubles" />
         <p className="text-[0.92rem] leading-relaxed text-ink-soft">{type.doubles}</p>
         <div className="mt-4 grid grid-cols-2 gap-2.5">
-          <PartnerCard label="最佳搭子" code={bestPartner(type.code)} tone="green" onPick={onPickType} />
-          <PartnerCard label="最怕遇到" code={nightmare(type.code)} tone="clay" onPick={onPickType} />
+          <PartnerCard label={t.bestPartner[locale]} code={bestPartner(type.code)} tone="green" onPick={onPickType} />
+          <PartnerCard label={t.nightmare[locale]} code={nightmare(type.code)} tone="clay" onPick={onPickType} />
         </div>
       </section>
 
       {/* actions */}
       <section className="mt-8 space-y-2.5">
         <button className="btn-primary" onClick={makeCard}>
-          {cardError ? '生成失败，点一下重试' : '查看分享卡片'}
+          {cardError ? t.cardFailed[locale] : t.viewCard[locale]}
         </button>
         {isOwn ? (
           <button className="btn-ghost w-full" onClick={onStart}>
-            再测一次
+            {t.retake[locale]}
           </button>
         ) : (
           <button className="btn-ghost w-full" onClick={onStart}>
-            测一测我是哪一种
+            {t.takeTest[locale]}
           </button>
         )}
       </section>
 
       {total !== null && (
         <p className="mt-4 text-center text-[0.7rem] text-ink-soft">
-          已有 {total.toLocaleString()} 人完成测试
+          {total.toLocaleString()} {t.finished[locale]}
         </p>
       )}
 
       {/* other types */}
       <section className="mt-10">
-        <SectionTitle label="其他型号" en="All Types" />
+        <SectionTitle label={t.otherTypes[locale]} en="All Types" />
         <div className="grid grid-cols-4 gap-px bg-ink/15">
           {ALL_CODES.map((c) => (
             <button
@@ -281,8 +295,7 @@ export function Result({
 
       <footer className="mt-10 border-t-[1.5px] border-ink pt-4">
         <p className="text-[0.68rem] leading-relaxed text-ink-soft">
-          TSTI 是一个娱乐性质的自测工具，不构成心理测量、技术评级或教练建议。
-          它只描述你打球的倾向，与你的球技无关。
+          {t.disclaimer[locale]}
         </p>
       </footer>
 
@@ -293,16 +306,16 @@ export function Result({
           onClick={() => setCardUrl(null)}
         >
           <div className="flex items-center justify-between pb-3 text-paper">
-            <span className="font-cond text-sm tracking-[0.18em] uppercase">长按图片保存</span>
+            <span className="font-cond text-sm tracking-[0.18em] uppercase">{t.saveHint[locale]}</span>
             <button onClick={() => setCardUrl(null)} className="text-sm">
-              关闭 ✕
+              {t.close[locale]}
             </button>
           </div>
           <div className="flex-1 overflow-auto" onClick={(e) => e.stopPropagation()}>
             <img src={cardUrl} alt="分享卡片" style={{ width: '100%', maxWidth: 420, height: 'auto', display: 'block', margin: '0 auto' }} />
           </div>
           <button className="btn-primary mt-3" onClick={shareCard}>
-            分享 / 保存到相册
+            {t.share[locale]}
           </button>
         </div>
       )}
@@ -330,7 +343,8 @@ function PartnerCard({
   tone: 'green' | 'clay'
   onPick: (code: string) => void
 }) {
-  const t = TYPES[code]
+  const { locale } = useLocale()
+  const type = getTypes(locale)[code]
   return (
     <button
       onClick={() => onPick(code)}
@@ -338,7 +352,7 @@ function PartnerCard({
     >
       <div className={`label mb-1 text-[0.55rem] ${tone === 'clay' ? '!text-clay' : ''}`}>{label}</div>
       <div className="font-display text-base text-green">{code}</div>
-      <div className="mt-0.5 text-[0.78rem] leading-tight">{t?.name}</div>
+      <div className="mt-0.5 text-[0.78rem] leading-tight">{type?.name}</div>
     </button>
   )
 }

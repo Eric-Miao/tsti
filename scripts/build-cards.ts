@@ -3,7 +3,8 @@ import path from 'node:path'
 import satori from 'satori'
 import { Resvg } from '@resvg/resvg-js'
 import { execFileSync } from 'node:child_process'
-import { ALL_CODES, TYPES } from '../src/data/types'
+import { ALL_CODES } from '../src/data/types'
+import { getTypes } from '../src/data'
 import { CardTemplate } from '../shared/CardTemplate'
 
 const root = process.cwd()
@@ -20,7 +21,11 @@ const fonts = [
 const b64 = (p: string, mime: string) =>
   `data:${mime};base64,${fs.readFileSync(p).toString('base64')}`
 
-for (const code of ALL_CODES) {
+for (const locale of ['zh', 'en'] as const) {
+  const TYPES = getTypes(locale)
+  const outDirL = locale === 'en' ? path.join(outDir, 'en') : outDir
+  fs.mkdirSync(outDirL, { recursive: true })
+  for (const code of ALL_CODES) {
   const type = TYPES[code]
   const svg = await satori(
     CardTemplate({
@@ -28,15 +33,17 @@ for (const code of ALL_CODES) {
       index: ALL_CODES.indexOf(code) + 1,
       artSrc: b64(`public/types/${code.toLowerCase()}-v3.jpg`, 'image/jpeg'),
       qrSrc: b64('public/qr-v4.png', 'image/png'),
+      locale,
     }) as any,
     { width: 1080, height: 1920, fonts },
   )
   const png = new Resvg(svg, { fitTo: { mode: 'width', value: 1080 } }).render().asPng()
-  const tmp = path.join(outDir, `${code}.png`)
+  const tmp = path.join(outDirL, `${code}.png`)
   fs.writeFileSync(tmp, png)
-  execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', tmp, '-q:v', '2', path.join(outDir, `${code}.jpg`)])
+  execFileSync('ffmpeg', ['-v', 'error', '-y', '-i', tmp, '-q:v', '2', path.join(outDirL, `${code}.jpg`)])
   fs.unlinkSync(tmp)
-  console.log(code, fs.statSync(path.join(outDir, `${code}.jpg`)).size)
+  console.log(locale, code, fs.statSync(path.join(outDirL, `${code}.jpg`)).size)
+  }
 }
 
 console.log('cards written to public/cards')

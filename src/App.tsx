@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react'
-import { TYPES } from './data/types'
 import { Landing } from './screens/Landing'
 import { Quiz } from './screens/Quiz'
 import { Result } from './screens/Result'
 import { loadAnswers, saveAnswers, loadLastResult, saveLastResult } from './lib/storage'
 import { score, type TstiResult } from './lib/scoring'
 import type { Pole } from './data/questions'
+import { ALL_CODES, getQuestions } from './data'
+import { LocaleProvider, useLocale } from './i18n'
 
 type Route =
   | { name: 'landing' }
@@ -20,7 +21,7 @@ function parseHash(): Route {
 
   if (path.startsWith('r/')) {
     const code = path.slice(2).toUpperCase()
-    if (TYPES[code]) {
+    if (ALL_CODES.includes(code)) {
       const dimsParam = new URLSearchParams(query ?? '').get('d')
       const dims = dimsParam
         ? dimsParam.split(',').map((chunk) => chunk.split('').map((n) => Number(n)))
@@ -41,7 +42,8 @@ function toHash(route: Route): string {
   return '#/'
 }
 
-export default function App() {
+function AppInner() {
+  const { locale } = useLocale()
   const [route, setRoute] = useState<Route>(() => parseHash())
   const [answers, setAnswers] = useState<Record<number, Pole>>(() => loadAnswers())
 
@@ -66,7 +68,7 @@ export default function App() {
 
   const handleComplete = useCallback(
     (all: Record<number, Pole>): TstiResult => {
-      const result = score(all)
+      const result = score(all, getQuestions(locale))
       saveLastResult(result.code)
       navigate({
         name: 'result',
@@ -75,7 +77,7 @@ export default function App() {
       })
       return result
     },
-    [navigate],
+    [navigate, locale],
   )
 
   if (route.name === 'quiz') {
@@ -114,5 +116,13 @@ export default function App() {
       lastResult={loadLastResult()}
       onViewLast={(code) => navigate({ name: 'result', code })}
     />
+  )
+}
+
+export default function App() {
+  return (
+    <LocaleProvider>
+      <AppInner />
+    </LocaleProvider>
   )
 }
