@@ -26,7 +26,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Your topspin is still rising when it reaches their shoulder","Long rallies don't scare you — the seventh shot is your first","Your energy on court drags your partner up with you"],
     weaknesses: ["When your mood drops, the whole set goes with it","It's hard on the legs — the third set loses a gear","Anyone who changes pace gets you rushing"],
     gear: [
-      { label: "Racquet", value: "100 sq in, slightly head-heavy" },
+      { label: "Racket", value: "100 sq in, slightly head-heavy" },
       { label: "Strings", value: "Polyester 1.25" },
       { label: "Tension", value: "48–52" },
       { label: "Surface", value: "Clay, by far the happiest" },
@@ -52,7 +52,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Huge range — no angle is too wide to chase down","Two breaks down and your shape doesn't change","Your defensive ball has spin; it lands at their feet"],
     weaknesses: ["Few ways to win a point outright — every point takes a dozen shots to win","Relentless net rushers can pin you back","The game where the tank empties goes fast"],
     gear: [
-      { label: "Racquet", value: "285–300 g, lighter so you can run" },
+      { label: "Racket", value: "285–300 g, lighter so you can run" },
       { label: "Strings", value: "Multifilament or soft poly" },
       { label: "Tension", value: "46–50" },
       { label: "Surface", value: "Clay, slow hard courts" },
@@ -81,7 +81,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Top-end single-shot quality; not many people can absorb it","You take it early, so they never get their racket back","Your presence shrinks them before the first ball"],
     weaknesses: ["High error count, worst on the big points","Looping balls and grinders make you rush","The second serve is a visible weak spot"],
     gear: [
-      { label: "Racquet", value: "98–100, head-light so it swings" },
+      { label: "Racket", value: "98–100, head-light so it swings" },
       { label: "Strings", value: "Polyester 1.25–1.30" },
       { label: "Tension", value: "50–54" },
       { label: "Surface", value: "Fast hard courts" },
@@ -108,7 +108,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Great athleticism — you make shapes other people can't","The switch from defense to attack is explosive","The longer it goes the better you play; you don't fold"],
     weaknesses: ["This style costs the body","Sometimes you play one extra ball for the highlight","You'd rather not be the one to end the point"],
     gear: [
-      { label: "Racquet", value: "100, slightly head-light for racket speed" },
+      { label: "Racket", value: "100, slightly head-light for racket speed" },
       { label: "Strings", value: "Soft polyester" },
       { label: "Tension", value: "48–52" },
       { label: "Surface", value: "Hard courts" },
@@ -136,7 +136,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["You read the right moment to come in","Volleys land in nasty spots, and they have spin","The pressure arrives early — they panic before you've done anything"],
     weaknesses: ["Once you're passed, you're not getting back","The lob is your kryptonite","No patience for baseline exchanges"],
     gear: [
-      { label: "Racquet", value: "97–100, head-light balance" },
+      { label: "Racket", value: "97–100, head-light balance" },
       { label: "Strings", value: "Natural gut or soft poly" },
       { label: "Tension", value: "52–56" },
       { label: "Surface", value: "Fast hard courts, grass" },
@@ -163,7 +163,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Exceptional hands — the drop shot and the lob are both weapons","Lots of tactical ideas; you don't play by the book","You're very good at wrecking other people's rhythm"],
     weaknesses: ["Power players can flatten you","Finesse shots miss at a high price","This style is more physical than it looks"],
     gear: [
-      { label: "Racquet", value: "98–100, control frame" },
+      { label: "Racket", value: "98–100, control frame" },
       { label: "Strings", value: "Natural gut or multifilament" },
       { label: "Tension", value: "50–55" },
       { label: "Surface", value: "Clay, grass" },
@@ -189,7 +189,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Elite closing ability at the net","Your presence backs them up before a ball is struck","You'll come in on the big points"],
     weaknesses: ["Getting passed rattles you","Baseline exchanges are a losing trade","Coming in behind the second serve is a real risk"],
     gear: [
-      { label: "Racquet", value: "95–98, head-light and quick" },
+      { label: "Racket", value: "95–98, head-light and quick" },
       { label: "Strings", value: "Polyester" },
       { label: "Tension", value: "52–56" },
       { label: "Surface", value: "Grass, fast hard courts" },
@@ -215,7 +215,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["You cover a lot of net","Great positional sense — always where the ball is going","Emotionally flat, which makes you your partner's anchor"],
     weaknesses: ["Half your value disappears in singles","You rarely change direction yourself","A lob pulls you out of position"],
     gear: [
-      { label: "Racquet", value: "100+, head-light" },
+      { label: "Racket", value: "100+, head-light" },
       { label: "Strings", value: "Polyester" },
       { label: "Tension", value: "50–54" },
       { label: "Surface", value: "Hard courts" },
@@ -230,7 +230,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     summary: "You don't talk much. Your ball does the talking. Big backswing, heavy spin, depth on depth — and you keep turning it up, one ball at a time. By the third set everyone else is breathing hard, and your ball has somehow gotten heavier.",
     players: [
       { name: "Dominic Thiem", title: "2020 US Open champion", note: "Heavy one-handed topspin — quiet, but every ball adds a little more." },
-      { name: "Stefanos Tsitsipas", title: "2021 Roland Garros finalist", note: "Heavy one-hander; the moment his forehand opens, it's a wide angle." },
+      { name: "Stefanos Tsitsipas", title: "2021 French Open finalist", note: "Heavy one-hander; the moment his forehand opens, it's a wide angle." },
       { name: "Iga Świątek", title: "Former World No. 1", note: "Turned topspin and the slide into a religion." },
     ],
     profile: [
@@ -242,7 +242,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["One ball of yours leaves their arm numb","Deep tank — you still have legs in the fifth","Hard to rattle, hard to rush"],
     weaknesses: ["Slow off the mark; fast rhythm bothers you","Net-rushers catch you half a beat late","No plan B on the big points"],
     gear: [
-      { label: "Racquet", value: "100 sq in, head-heavy" },
+      { label: "Racket", value: "100 sq in, head-heavy" },
       { label: "Strings", value: "Polyester 1.30" },
       { label: "Tension", value: "48–52" },
       { label: "Surface", value: "Clay" },
@@ -269,7 +269,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Elite return; his second serve doesn't count as a serve to you","Defense-to-offense with no seam in it","Two match points down is still a winnable match"],
     weaknesses: ["Little appetite for attacking first","Serve-and-volleyers make you uncomfortable","This style eats legs and focus"],
     gear: [
-      { label: "Racquet", value: "100, balanced" },
+      { label: "Racket", value: "100, balanced" },
       { label: "Strings", value: "Polyester or a hybrid" },
       { label: "Tension", value: "52–56" },
       { label: "Surface", value: "Hard court" },
@@ -298,7 +298,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Clean contact, real pace","Nothing shows on your face; you're unreadable","You swing free on the big points"],
     weaknesses: ["When your mood drops, the level falls off a cliff","Few changes — he'll figure you out eventually","Long rallies drain your patience"],
     gear: [
-      { label: "Racquet", value: "98–100" },
+      { label: "Racket", value: "98–100" },
       { label: "Strings", value: "Polyester" },
       { label: "Tension", value: "52–56" },
       { label: "Surface", value: "Hard court" },
@@ -325,7 +325,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Very low error count","Consistently deep — short balls are rare","No surface, no conditions, no excuses"],
     weaknesses: ["No kill shot","Big hitters can pin you back","An unglamorous game that gets underrated"],
     gear: [
-      { label: "Racquet", value: "100, control frame" },
+      { label: "Racket", value: "100, control frame" },
       { label: "Strings", value: "Polyester" },
       { label: "Tension", value: "50–54" },
       { label: "Surface", value: "Any surface" },
@@ -341,7 +341,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     players: [
       { name: "Stefan Edberg", title: "6 Grand Slams", note: "Serve-and-volley with a beautiful volley — ends matches quietly." },
       { name: "Martina Hingis", title: "Swiss Miss", note: "World No. 1 at 16, with the softest hands at the net." },
-      { name: "Barbora Krejčíková", title: "2021 Roland Garros champion", note: "Great hands up front, doubles pedigree." },
+      { name: "Barbora Krejčíková", title: "2021 French Open champion", note: "Great hands up front, doubles pedigree." },
     ],
     profile: [
       { label: "Court position", value: "Inside the service line" },
@@ -352,7 +352,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Serve placement","Sharp volley angles","Calm hands on the big points"],
     weaknesses: ["You don't win the power contest","A strong return pins you at the back","Baseline rallies aren't your strength"],
     gear: [
-      { label: "Racquet", value: "95–98, head-light" },
+      { label: "Racket", value: "95–98, head-light" },
       { label: "Strings", value: "Natural gut or a hybrid" },
       { label: "Tension", value: "52–56" },
       { label: "Surface", value: "Grass, fast hard court" },
@@ -369,7 +369,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
       { name: "Fabrice Santoro", title: "The Magician", note: "Two hands, two grips, 21 years on tour." },
       { name: "Lorenzo Musetti", title: "2024 Wimbledon semifinalist", note: "Elegant one-hander; the net game is a bonus." },
       { name: "Ashleigh Barty", title: "3 Grand Slams", note: "Slice and net play — dismantles opponents without raising her voice." },
-      { name: "Daria Kasatkina", title: "2022 Roland Garros semifinalist", note: "Slices and variety; slow it down and she wins." },
+      { name: "Daria Kasatkina", title: "2022 French Open semifinalist", note: "Slices and variety; slow it down and she wins." },
     ],
     profile: [
       { label: "Court position", value: "Roaming the mid-court" },
@@ -380,7 +380,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Elite hands and imagination","Heavy slice that drags the tempo down","Ice-cold; being behind doesn't bother you"],
     weaknesses: ["Not enough power","Big hitters push you onto the back foot","Almost impossible to teach"],
     gear: [
-      { label: "Racquet", value: "98–100, control frame" },
+      { label: "Racket", value: "98–100, control frame" },
       { label: "Strings", value: "Natural gut or multifilament" },
       { label: "Tension", value: "48–52" },
       { label: "Surface", value: "Grass, clay" },
@@ -408,7 +408,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Efficient — nothing wasted","Fine hands, precise volley placement","No tremble on the big points"],
     weaknesses: ["Needs the setup; hard to turn a defensive point around","Demands good energy management","Grinders wear your patience thin"],
     gear: [
-      { label: "Racquet", value: "97, balanced" },
+      { label: "Racket", value: "97, balanced" },
       { label: "Strings", value: "Natural gut or a hybrid" },
       { label: "Tension", value: "52–56" },
       { label: "Surface", value: "Grass" },
@@ -435,7 +435,7 @@ export const TYPES_EN: Record<string, Omit<TennisType, 'code'>> = {
     strengths: ["Reliable hands, almost no free points","Iron discipline in positioning","No glory-hunting — your partner plays loose"],
     weaknesses: ["Limited value in singles","Rarely changes things up","Lobs put you out of position"],
     gear: [
-      { label: "Racquet", value: "100+, head-light" },
+      { label: "Racket", value: "100+, head-light" },
       { label: "Strings", value: "Polyester" },
       { label: "Tension", value: "50–54" },
       { label: "Surface", value: "Hard court" },
