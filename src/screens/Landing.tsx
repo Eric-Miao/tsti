@@ -92,7 +92,7 @@ export function Landing({
       <section className="mt-10">
         <div className="flex items-baseline justify-between border-b-[1.5px] border-ink pb-2">
           <h2 className="font-cond text-lg font-bold tracking-[0.18em] uppercase">{t.axes[locale]}</h2>
-          <span className="label text-[0.58rem]">Four Axes</span>
+          {locale === 'zh' && <span className="label text-[0.58rem]">Four Axes</span>}
         </div>
         <div className="mt-4">
           <DimensionLegend />

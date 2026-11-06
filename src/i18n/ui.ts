@@ -18,22 +18,22 @@ export const UI = {
     axes: { zh: '四个维度', en: 'The four axes' },
     axesNote: {
       zh: '每一维都是二选一，没有对错。四个维度组合出 2⁴ = 16 种类型。',
-      en: 'Every axis is binary. There is no right answer. Four axes make 2⁴ = 16 types.',
+      en: 'Each axis is a choice between two. There is no wrong answer. Four axes make 2⁴ = 16 types.',
     },
     why: { zh: '为什么是 16 种', en: 'Why sixteen' },
     whyBody: {
       zh: '大部分网球测试只问一件事：你进攻还是防守。可决定你像谁的，还有你站在底线还是网前、球过网是高还是低、丢分之后脸上写不写字。这四件事各自只有两个答案，加起来十六种。少一个维度，你就会掉进一个不像自己的格子。',
-      en: 'Most tennis quizzes ask one question: do you attack or defend? But what makes you recognisable is also where you stand, how high the ball clears the net, and whether your face tells the story. Four questions with two answers each. Drop one and you land in a box that is not quite you.',
+      en: 'Most tennis quizzes ask one question: do you attack or defend? But what makes you recognizable is also where you stand, how high the ball clears the net, and whether your face tells the story. Each of those has only two answers. Drop one and the type you get is not quite you.',
     },
     disclaimer: {
       zh: 'TSTI 是一个娱乐性质的自测工具，不构成心理测量、技术评级或教练建议。它只描述你打球的倾向，与你的球技无关。',
-      en: 'TSTI is a just-for-fun self-assessment. It is not a psychometric test, a rating, or coaching advice. It describes how you play, not how well.',
+      en: 'TSTI is just for fun. It is not a psychometric test, a rating, or coaching advice. It describes how you play, not how well.',
     },
   },
   quiz: {
     back: { zh: '← 上一步', en: '← Back' },
     of: { zh: '/', en: '/' },
-    hint: { zh: '凭第一反应选，别想“应该”怎么打。', en: 'Go with your first reaction. Not what you should do.' },
+    hint: { zh: '凭第一反应选，别想“应该”怎么打。', en: 'Go with your first reaction, not what you think you should do.' },
     restart: { zh: '重新开始', en: 'Start over' },
   },
   result: {
@@ -50,7 +50,7 @@ export const UI = {
     doubles: { zh: '双打定位', en: 'Doubles' },
     bestPartner: { zh: '最佳搭子', en: 'Best partner' },
     nightmare: { zh: '最怕遇到', en: 'Worst matchup' },
-    viewCard: { zh: '查看分享卡片', en: 'View share card' },
+    viewCard: { zh: '查看分享卡片', en: 'View your result card' },
     cardFailed: { zh: '生成失败，点一下重试', en: 'Failed — tap to retry' },
     retake: { zh: '再测一次', en: 'Take it again' },
     takeTest: { zh: '测一测我是哪一种', en: 'Take the test' },
@@ -58,11 +58,11 @@ export const UI = {
     otherTypes: { zh: '其他型号', en: 'Other types' },
     disclaimer: {
       zh: 'TSTI 是一个娱乐性质的自测工具，不构成心理测量、技术评级或教练建议。它只描述你打球的倾向，与你的球技无关。',
-      en: 'TSTI is a just-for-fun self-assessment. It is not a psychometric test, a rating, or coaching advice. It describes how you play, not how well.',
+      en: 'TSTI is just for fun. It is not a psychometric test, a rating, or coaching advice. It describes how you play, not how well.',
     },
     saveHint: { zh: '长按图片保存', en: 'Long-press to save' },
     close: { zh: '关闭 ✕', en: 'Close ✕' },
-    share: { zh: '分享 / 保存到相册', en: 'Share / Save to photos' },
+    share: { zh: '分享 / 保存到相册', en: 'Share or save image' },
   },
   card: {
     label: { zh: '网球人格测试', en: 'TENNIS PERSONALITY TEST' },

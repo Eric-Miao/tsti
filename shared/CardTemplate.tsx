@@ -91,8 +91,8 @@ export function CardTemplate({ type, index, artSrc, qrSrc, locale = 'zh' }: Card
                 padding: '8px 16px',
               }}
             >
-              <div style={{ fontSize: locale === 'en' ? 20 : 26, fontWeight: 700, color: C.green, letterSpacing: locale === 'en' ? 1 : 0 }}>
-              {locale === 'en' ? 'TENNIS PERSONALITY TEST' : '网球人格测试'}
+              <div style={{ fontSize: locale === 'en' ? 17 : 26, fontWeight: 700, color: C.green, letterSpacing: locale === 'en' ? 1 : 0 }}>
+              {locale === 'en' ? 'TENNIS STYLE TYPE INDICATOR' : '网球人格测试'}
             </div>
             </div>
             <div

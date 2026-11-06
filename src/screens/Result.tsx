@@ -312,7 +312,7 @@ export function Result({
             </button>
           </div>
           <div className="flex-1 overflow-auto" onClick={(e) => e.stopPropagation()}>
-            <img src={cardUrl} alt="分享卡片" style={{ width: '100%', maxWidth: 420, height: 'auto', display: 'block', margin: '0 auto' }} />
+            <img src={cardUrl} alt={locale === 'zh' ? '分享卡片' : 'Share card'} style={{ width: '100%', maxWidth: 420, height: 'auto', display: 'block', margin: '0 auto' }} />
           </div>
           <button className="btn-primary mt-3" onClick={shareCard}>
             {t.share[locale]}
@@ -324,10 +324,11 @@ export function Result({
 }
 
 function SectionTitle({ label, en }: { label: string; en: string }) {
+  const { locale } = useLocale()
   return (
     <div className="mb-3 flex items-baseline justify-between border-b-[1.5px] border-ink pb-2">
       <h2 className="font-cond text-base font-bold tracking-[0.18em] uppercase">{label}</h2>
-      <span className="label text-[0.55rem]">{en}</span>
+      {locale === 'zh' && <span className="label text-[0.55rem]">{en}</span>}
     </div>
   )
 }

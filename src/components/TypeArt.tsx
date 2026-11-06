@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useLocale } from '../i18n'
 import { typeArtUrl } from './Ball'
 
 export function TypeArt({
@@ -10,6 +11,7 @@ export function TypeArt({
   className?: string
   alt?: string
 }) {
+  const { locale } = useLocale()
   const [failed, setFailed] = useState(false)
 
   if (failed) {
@@ -26,7 +28,7 @@ export function TypeArt({
   return (
     <img
       src={typeArtUrl(code)}
-      alt={alt ?? `${code} 类型插图`}
+      alt={alt ?? (locale === 'zh' ? `${code} 类型插图` : `${code} illustration`)}
       className={className}
       loading="lazy"
       decoding="async"
